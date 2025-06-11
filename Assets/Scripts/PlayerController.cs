@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,6 +22,7 @@ public class PlayerController : MonoBehaviour
   [Header("스탯")]
   public float att = 10;
   public float defIg = 0;
+  public int ballCount = 1;
 
 
   bool isReady = true;
@@ -90,6 +93,20 @@ public class PlayerController : MonoBehaviour
       isReady = false;
     }
   }
+
+  // 공 추가 생성 메서드
+  void AddBall()
+  {
+    List<GameObject> subBalls = new List<GameObject>();
+
+    for (int i = 0; i < ballCount; i++)
+    {
+      GameObject subBall = Instantiate(gameObject, startPos.position, Quaternion.Euler(0, 0, angle));
+      Rigidbody2D subRb = subBall.GetComponent<Rigidbody2D>();
+
+    }
+  }
+
 
 
   private void OnCollisionEnter2D(Collision2D collision)
