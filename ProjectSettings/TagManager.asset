@@ -6,11 +6,12 @@ TagManager:
   tags:
   - DSideBar
   - Block
+  - SubBall
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ball
   - Water
   - UI
   - 

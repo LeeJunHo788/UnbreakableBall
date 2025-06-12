@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,21 +13,27 @@ public class PlayerController : MonoBehaviour
   [HideInInspector]
   public InputSystem_Actions controls;
 
-
   [HideInInspector]
   public Rigidbody2D rb;
 
+  [HideInInspector]
+  public Vector3 startPos;
+
+  [HideInInspector]
+  public bool isStartPosFixed = false;
+
+  [HideInInspector]
+  public int activeBallCount = 0;
+  public bool isReady = true;
+
   [Header("할당 오브젝트")]
   public GameObject directionObj;
+  public GameObject ballPrefab;
 
   [Header("스탯")]
   public float att = 10;
   public float defIg = 0;
-  public int ballCount = 1;
-
-
-  bool isReady = true;
-  Transform startPos;
+  public int additionalBallCount = 0;
 
 
 
@@ -52,7 +59,7 @@ public class PlayerController : MonoBehaviour
   private void Start()
   {
     rb = GetComponent<Rigidbody2D>();
-    startPos = transform;
+    startPos = transform.position;
 
     transform.rotation = Quaternion.Euler(0, 0, angle);
 
@@ -87,41 +94,79 @@ public class PlayerController : MonoBehaviour
     {
       float angleRad = angle * Mathf.Deg2Rad;
       Vector2 dir = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
+
+      StartCoroutine(AddBall(dir));
       
       rb.linearVelocity = dir.normalized * moveSpeed;
       directionObj.gameObject.SetActive(false);
       isReady = false;
+
     }
   }
 
   // 공 추가 생성 메서드
-  void AddBall()
+  IEnumerator AddBall(Vector2 dir)
   {
     List<GameObject> subBalls = new List<GameObject>();
 
-    for (int i = 0; i < ballCount; i++)
+    // yield return new WaitForSeconds(0.1f);
+
+    for (int i = 0; i < additionalBallCount; i++)
     {
-      GameObject subBall = Instantiate(gameObject, startPos.position, Quaternion.Euler(0, 0, angle));
+      yield return new WaitForSeconds(0.1f);
+
+      Debug.Log(startPos);
+      GameObject subBall = Instantiate(ballPrefab, startPos, Quaternion.Euler(0, 0, angle));
       Rigidbody2D subRb = subBall.GetComponent<Rigidbody2D>();
+      subBalls.Add(subBall);
+
+      subRb.linearVelocity = dir.normalized * moveSpeed;
 
     }
   }
 
+  public void IsReady()
+  {
+    isReady = true;
+    directionObj.gameObject.SetActive(true);
 
+    OnPlayerReady?.Invoke();    // 준비 이벤트 호출
+  }
 
   private void OnCollisionEnter2D(Collision2D collision)
   {
     if (collision.collider.CompareTag("DSideBar"))
     {
-      startPos.position = collision.GetContact(0).point;
       rb.linearVelocity = Vector2.zero;
+
+      if (!isStartPosFixed)
+      {
+        startPos = transform.position;
+        isStartPosFixed = true;  // 고정 완료
+      }
+
+      else
+      {
+        float speed = 20;
+        float distance = Vector3.Distance(transform.position, startPos);
+        float duration = distance / speed;
+
+        transform.DOMove(startPos, duration).SetEase(Ease.Linear);
+      }
+
       transform.rotation = Quaternion.Euler(0, 0, 90);
 
-      angle = 90f;
-      isReady = true;
-      directionObj.gameObject.SetActive(true);
+      activeBallCount++;
+      if (activeBallCount == additionalBallCount + 1)
+      {
+        activeBallCount = 0;
+        isStartPosFixed = false;
+        IsReady();
+      }
 
-      OnPlayerReady?.Invoke();    // 준비 이벤트 호출
+
+      angle = 90f;
+      
     }
   }
 }

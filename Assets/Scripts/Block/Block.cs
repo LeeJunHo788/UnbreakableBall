@@ -21,24 +21,34 @@ public class Block : MonoBehaviour
 
   void OnCollisionEnter2D(Collision2D collision)
   {
+    float dem = 0;
+
     // 공과 닿았을 때 체력 감소
     if (collision.gameObject.CompareTag("Player"))
     {
-      Debug.Log("실행");
-
       PlayerController pc = collision.gameObject.GetComponent<PlayerController>();
 
-      float dem = Mathf.RoundToInt(GetRandomAround(pc.att));
-
-      hp -= dem;
-      hpText.text = hp.ToString();
-
-      if (hp <= 0)
-      {
-        Destroy(gameObject);
-      }
-
+      dem = Mathf.RoundToInt(GetRandomAround(pc.att));
     }
+
+    else if (collision.gameObject.CompareTag("SubBall"))
+    {
+      SubBallController sc = collision.gameObject.GetComponent<SubBallController>();
+
+      dem = Mathf.RoundToInt(GetRandomAround(sc.att));
+    }
+
+    float finalDem = Mathf.Max(dem - def, 1); // 최소 데미지 보정
+
+    hp -= finalDem;
+    hpText.text = hp.ToString();
+
+    if (hp <= 0)
+    {
+      DropItem();
+      Destroy(gameObject);
+    }
+
   }
 
   // 데미지 랜덤 뽑기
@@ -57,5 +67,7 @@ public class Block : MonoBehaviour
   {
     PlayerController.Instance.OnPlayerReady -= MoveDown;
   }
+
+  protected virtual void DropItem() { }
 
 }
