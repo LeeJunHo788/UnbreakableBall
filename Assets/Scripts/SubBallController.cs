@@ -3,6 +3,8 @@ using DG.Tweening;
 
 public class SubBallController : MonoBehaviour
 {
+  public bool isFirstDown = false;
+
   public float att;
   public float defIg;
 
@@ -22,6 +24,9 @@ public class SubBallController : MonoBehaviour
       {
         PlayerController.Instance.startPos = transform.position;
         PlayerController.Instance.isStartPosFixed = true;
+        isFirstDown = true;
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        rb.linearVelocity = Vector2.zero;
       }
 
 
@@ -34,13 +39,14 @@ public class SubBallController : MonoBehaviour
 
         if(PlayerController.Instance.activeBallCount == PlayerController.Instance.additionalBallCount + 1)
         {
-          PlayerController.Instance.activeBallCount = 0;
           PlayerController.Instance.isStartPosFixed = false;
           PlayerController.Instance.IsReady();
         }
 
-        // if()
-        Destroy(gameObject);
+        if(!isFirstDown)
+        {
+          Destroy(gameObject);
+        }
       });
     }
   }

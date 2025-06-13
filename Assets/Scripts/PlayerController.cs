@@ -23,6 +23,9 @@ public class PlayerController : MonoBehaviour
   public bool isStartPosFixed = false;
 
   [HideInInspector]
+  public bool addBall = false;
+
+  [HideInInspector]
   public int activeBallCount = 0;
   public bool isReady = true;
 
@@ -34,10 +37,10 @@ public class PlayerController : MonoBehaviour
   public float att = 10;
   public float defIg = 0;
   public int additionalBallCount = 0;
+  public float moveSpeed = 30;
 
+  List<GameObject> subBalls = new List<GameObject>();
 
-
-  float moveSpeed = 10;
   float angle = 90f;         // 현재 각도
   float angleSpeed = 60f;   // 회전 속도
 
@@ -81,7 +84,7 @@ public class PlayerController : MonoBehaviour
     {
       angle += -input * angleSpeed * Time.deltaTime;
        
-      angle = Mathf.Clamp(angle, 20, 160);
+      angle = Mathf.Clamp(angle, 20, 170);
      
       transform.rotation = Quaternion.Euler(0, 0, angle);
     }
@@ -107,10 +110,6 @@ public class PlayerController : MonoBehaviour
   // 공 추가 생성 메서드
   IEnumerator AddBall(Vector2 dir)
   {
-    List<GameObject> subBalls = new List<GameObject>();
-
-    // yield return new WaitForSeconds(0.1f);
-
     for (int i = 0; i < additionalBallCount; i++)
     {
       yield return new WaitForSeconds(0.1f);
@@ -130,6 +129,19 @@ public class PlayerController : MonoBehaviour
     isReady = true;
     directionObj.gameObject.SetActive(true);
 
+    if(addBall)
+    {
+      additionalBallCount++;
+      addBall = false;
+    }
+
+    for (int i = 0; i < subBalls.Count; i++)
+    {
+      Destroy(subBalls[i]);
+    }
+
+    activeBallCount = 0;
+
     OnPlayerReady?.Invoke();    // 준비 이벤트 호출
   }
 
@@ -143,6 +155,17 @@ public class PlayerController : MonoBehaviour
       {
         startPos = transform.position;
         isStartPosFixed = true;  // 고정 완료
+
+        transform.rotation = Quaternion.Euler(0, 0, 90);
+        activeBallCount++;
+
+        if (activeBallCount == additionalBallCount + 1)
+        {
+
+          isStartPosFixed = false;
+          IsReady();
+        }
+
       }
 
       else
@@ -151,18 +174,23 @@ public class PlayerController : MonoBehaviour
         float distance = Vector3.Distance(transform.position, startPos);
         float duration = distance / speed;
 
-        transform.DOMove(startPos, duration).SetEase(Ease.Linear);
-      }
+        transform.DOMove(startPos, duration).SetEase(Ease.Linear).OnComplete(() =>
+        {
+          transform.rotation = Quaternion.Euler(0, 0, 90);
+          activeBallCount++;
 
-      transform.rotation = Quaternion.Euler(0, 0, 90);
+          if (activeBallCount == additionalBallCount + 1)
+          {
 
-      activeBallCount++;
-      if (activeBallCount == additionalBallCount + 1)
-      {
-        activeBallCount = 0;
-        isStartPosFixed = false;
-        IsReady();
+            isStartPosFixed = false;
+            IsReady();
+          }
+
+        });
       }
+     
+
+      
 
 
       angle = 90f;
