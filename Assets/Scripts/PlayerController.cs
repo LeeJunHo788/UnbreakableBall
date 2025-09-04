@@ -4,26 +4,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using UnityEngine.InputSystem.EnhancedTouch;
+using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
-
   public static PlayerController Instance { get; private set; }
 
-  [HideInInspector]
-  public InputSystem_Actions controls;
+  [HideInInspector] public InputSystem_Actions controls;
+  [HideInInspector] public Rigidbody2D rb;
+  [HideInInspector] public Vector3 startPos;
+  [HideInInspector] public bool isStartPosFixed = false;
+  [HideInInspector] public bool canReady = true;
+  [HideInInspector] public bool isGameOver = false;
+  float angle = 90f;         // 현재 각도
+  float angleSpeed = 60f;   // 회전 속도
 
-  [HideInInspector]
-  public Rigidbody2D rb;
-
-  [HideInInspector]
-  public Vector3 startPos;
-
-  [HideInInspector]
-  public bool isStartPosFixed = false;
-
-  [HideInInspector]
-  public bool addBall = false;
+  List<GameObject> subBalls = new List<GameObject>();   // 서브 공 리스트
 
   [HideInInspector]
   public int activeBallCount = 0;
@@ -33,16 +31,9 @@ public class PlayerController : MonoBehaviour
   public GameObject directionObj;
   public GameObject ballPrefab;
 
-  [Header("스탯")]
-  public float att = 10;
-  public float defIg = 0;
-  public int additionalBallCount = 0;
-  public float moveSpeed = 30;
+  [HideInInspector]
+  public PlayerStats ps;
 
-  List<GameObject> subBalls = new List<GameObject>();
-
-  float angle = 90f;         // 현재 각도
-  float angleSpeed = 60f;   // 회전 속도
 
   public event Action OnPlayerReady;
 
@@ -57,6 +48,9 @@ public class PlayerController : MonoBehaviour
     controls = new InputSystem_Actions();
     controls.Player.Enable();
     controls.Player.Fire.performed += ct => BallFire();
+
+    EnhancedTouchSupport.Enable();
+    Touchscreen.current?.MakeCurrent();
   }
 
   private void Start()
@@ -66,30 +60,70 @@ public class PlayerController : MonoBehaviour
 
     transform.rotation = Quaternion.Euler(0, 0, angle);
 
+    ps = GetComponent<PlayerStats>();
+
     OnPlayerReady?.Invoke();
   }
 
 
   private void Update()
   {
+    if (isGameOver) return;
+
+    HandleTouchAimAndFire();
     SetDirection();
+  }
+
+  void HandleTouchAimAndFire()
+  {
+    if (!isReady) return;
+
+    if (Touch.activeTouches.Count > 0)
+    {
+      var t = Touch.activeTouches[0];
+
+      if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(0))
+        return;
+
+      var screenPos = t.screenPosition;
+      float z = -Camera.main.transform.position.z;
+      Vector3 world = Camera.main.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, z));
+
+      Vector2 dir = (world - transform.position);
+      if (dir.sqrMagnitude > 0.0001f)
+      {
+        float newAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        newAngle = Mathf.Clamp(newAngle, 20f, 170f);
+
+        angle = newAngle;
+        transform.rotation = Quaternion.Euler(0, 0, angle);
+      }
+
+      if (t.phase == UnityEngine.InputSystem.TouchPhase.Ended)
+      {
+        BallFire();
+      }
+    }
   }
 
   private void SetDirection()
   {
+    if (!isReady) return;
+
+    // 터치가 활성 중이면 키보드 입력 무시
+    if (Touch.activeTouches.Count > 0) return;
+
     float input = controls.Player.Move.ReadValue<Vector2>().x;
 
-    // 입력이 있을 때 각도를 조절
-    if (input != 0 && isReady)
+    if (Mathf.Abs(input) > 0.0001f)
     {
       angle += -input * angleSpeed * Time.deltaTime;
-       
       angle = Mathf.Clamp(angle, 20, 170);
-     
       transform.rotation = Quaternion.Euler(0, 0, angle);
     }
   }
 
+  // 공 추가 생성 메서드
   // 공 발사 메서드
   void BallFire()
   {
@@ -100,49 +134,63 @@ public class PlayerController : MonoBehaviour
 
       StartCoroutine(AddBall(dir));
       
-      rb.linearVelocity = dir.normalized * moveSpeed;
+      rb.linearVelocity = dir.normalized * ps.moveSpeed;
       directionObj.gameObject.SetActive(false);
       isReady = false;
 
     }
   }
 
-  // 공 추가 생성 메서드
   IEnumerator AddBall(Vector2 dir)
   {
-    for (int i = 0; i < additionalBallCount; i++)
+    for (int i = 0; i < ps.additionalBallCount; i++)
     {
-      yield return new WaitForSeconds(0.1f);
+      yield return new WaitForSeconds(ps.shootInterval);
 
       Debug.Log(startPos);
       GameObject subBall = Instantiate(ballPrefab, startPos, Quaternion.Euler(0, 0, angle));
       Rigidbody2D subRb = subBall.GetComponent<Rigidbody2D>();
       subBalls.Add(subBall);
 
-      subRb.linearVelocity = dir.normalized * moveSpeed;
+      subRb.linearVelocity = dir.normalized * ps.moveSpeed;
 
     }
   }
 
   public void IsReady()
   {
+    if(ps.hp <= 0)
+    {
+      GameManager.Instance.GameOver();
+      return;
+    }
+
     isReady = true;
     directionObj.gameObject.SetActive(true);
 
-    if(addBall)
+    if (ps.isAdded)
     {
-      additionalBallCount++;
-      addBall = false;
+      ps.additionalBallCount++;
+      ps.isAdded = false;
+
     }
 
     for (int i = 0; i < subBalls.Count; i++)
     {
       Destroy(subBalls[i]);
     }
+    subBalls.Clear();
 
     activeBallCount = 0;
 
     OnPlayerReady?.Invoke();    // 준비 이벤트 호출
+    StageManager.Instance.NextStage();
+
+    canReady = false;
+    DOVirtual.DelayedCall(3f, () =>
+    {
+      canReady = true;
+    });
   }
 
   private void OnCollisionEnter2D(Collision2D collision)
@@ -153,13 +201,15 @@ public class PlayerController : MonoBehaviour
 
       if (!isStartPosFixed)
       {
-        startPos = transform.position;
+        transform.position = new Vector3(transform.position.x, -6.59f);
+
+        startPos = new Vector3(transform.position.x, -6.57f);
         isStartPosFixed = true;  // 고정 완료
 
         transform.rotation = Quaternion.Euler(0, 0, 90);
         activeBallCount++;
 
-        if (activeBallCount == additionalBallCount + 1)
+        if (activeBallCount == ps.additionalBallCount + 1)
         {
 
           isStartPosFixed = false;
@@ -174,12 +224,14 @@ public class PlayerController : MonoBehaviour
         float distance = Vector3.Distance(transform.position, startPos);
         float duration = distance / speed;
 
-        transform.DOMove(startPos, duration).SetEase(Ease.Linear).OnComplete(() =>
+        Vector3 movePoint = new Vector3(startPos.x, -6.59f);
+
+        transform.DOMove(movePoint, duration).SetEase(Ease.Linear).OnComplete(() =>
         {
           transform.rotation = Quaternion.Euler(0, 0, 90);
           activeBallCount++;
 
-          if (activeBallCount == additionalBallCount + 1)
+          if (activeBallCount == ps.additionalBallCount + 1)
           {
 
             isStartPosFixed = false;
@@ -188,13 +240,9 @@ public class PlayerController : MonoBehaviour
 
         });
       }
-     
-
-      
-
-
       angle = 90f;
       
     }
   }
+
 }

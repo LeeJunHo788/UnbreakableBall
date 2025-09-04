@@ -42,7 +42,7 @@ public class BlockSpawner : MonoBehaviour
       GameObject block = Instantiate(blockObject, spawnPoints[n].transform.position, Quaternion.identity);
       block.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
 
-      block.transform.DOScale(new Vector3(1.2f, 0.6f, 1), 0.3f).SetEase(Ease.InOutSine);
+      block.transform.DOScale(new Vector3(1.0f, 0.5f, 1), 0.3f).SetEase(Ease.InOutSine);
     }
 
   }

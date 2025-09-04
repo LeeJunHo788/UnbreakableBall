@@ -6,7 +6,7 @@ public class BallAddItem : MonoBehaviour
   {
     if(collision.CompareTag("Player"))
     {
-      PlayerController.Instance.addBall = true;
+      PlayerController.Instance.ps.AddBallCount();
       Destroy(gameObject);
     }
   }

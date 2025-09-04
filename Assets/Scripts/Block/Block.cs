@@ -2,13 +2,15 @@ using UnityEngine;
 using TMPro;
 using DG.Tweening;
 
-// 블럭 가로 차이 = 1.2 세로 차이 = 0.6
+// 블럭 가로 차이 = 1 세로 차이 = 0.5
 public class Block : MonoBehaviour
 {
   TextMeshPro hpText;
 
+  protected float maxHp;
   protected float hp;
   protected float def;
+  protected int advanceCount = 0;
 
   protected virtual void Start()
   {
@@ -28,7 +30,7 @@ public class Block : MonoBehaviour
     {
       PlayerController pc = collision.gameObject.GetComponent<PlayerController>();
 
-      dem = Mathf.RoundToInt(GetRandomAround(pc.att));
+      dem = Mathf.RoundToInt(GetRandomAround(pc.ps.att));
     }
 
     else if (collision.gameObject.CompareTag("SubBall"))
@@ -45,6 +47,7 @@ public class Block : MonoBehaviour
 
     if (hp <= 0)
     {
+      ExpManager.Instance.AddExp(maxHp);
       DropItem();
       Destroy(gameObject);
     }
@@ -60,7 +63,34 @@ public class Block : MonoBehaviour
   // 아래 이동 함수
   void MoveDown()
   {
-    transform.DOMoveY(transform.position.y - 0.6f, 0.35f);
+    // if(advanceCount == 25)
+    if(advanceCount == 5)
+    {
+      SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
+      TMP_Text[] tmps = GetComponentsInChildren<TMP_Text>(true);
+
+      Sequence seq = DOTween.Sequence();
+
+      foreach (var rend in renderers)
+      {
+        seq.Join(rend.DOFade(0f, 1f));
+      }
+
+      foreach (var t in tmps)
+      {
+        seq.Join(t.DOFade(0f, 1f));
+      }
+
+      seq.OnComplete(() =>
+      {
+        PlayerController.Instance.ps.TakeDamage(Mathf.RoundToInt(hp));
+        Destroy(gameObject); 
+      });
+
+    }
+
+    transform.DOMoveY(transform.position.y - 0.5f, 0.35f);
+    advanceCount++;
   }
 
   void OnDestroy()
