@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
-  public SpriteRenderer blackPanel;
+  public Image blackPanel;
   public GameObject gameOverUI;
+  public BlockSpawner bs;
   public static GameManager Instance { get; set; }
 
   private void Awake()
@@ -21,7 +23,7 @@ public class GameManager : MonoBehaviour
 
   public void ForcedReady()
   {
-    if (!PlayerController.Instance.canReady) return;
+    if (!PlayerController.Instance.canReady || PlayerController.Instance.isGameOver ) return;
 
     if(PlayerController.Instance.isStartPosFixed)
     {
@@ -54,9 +56,10 @@ public class GameManager : MonoBehaviour
 
   public void GameOver()
   {
-    blackPanel.DOFade(240, 1.5f).OnComplete(() =>
+    PlayerController.Instance.isGameOver = true;
+
+    blackPanel.DOFade(0.8f, 1.5f).OnComplete(() =>
     {
-      PlayerController.Instance.isGameOver = true;
       gameOverUI.SetActive(true);
     });
 
@@ -64,11 +67,15 @@ public class GameManager : MonoBehaviour
 
   public void RestartGame()
   {
+    gameOverUI.SetActive(false);
     blackPanel.DOFade(0, 1f).OnComplete(() =>
     {
-      PlayerController.Instance.isGameOver = false;
+      PlayerController.Instance.ps.StartGame();
       ExpManager.Instance.ResetExp();
-      gameOverUI.SetActive(false);
+      StageManager.Instance.stageNum = 1;
+      bs.RestartGame();
+
+      PlayerController.Instance.isGameOver = false;
     });
     
 

@@ -64,10 +64,12 @@ public class Block : MonoBehaviour
   void MoveDown()
   {
     // if(advanceCount == 25)
-    if(advanceCount == 5)
+    if(advanceCount == 2)
     {
       SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
       TMP_Text[] tmps = GetComponentsInChildren<TMP_Text>(true);
+
+      PlayerController.Instance.ps.TakeDamage(Mathf.RoundToInt(hp));
 
       Sequence seq = DOTween.Sequence();
 
@@ -83,7 +85,6 @@ public class Block : MonoBehaviour
 
       seq.OnComplete(() =>
       {
-        PlayerController.Instance.ps.TakeDamage(Mathf.RoundToInt(hp));
         Destroy(gameObject); 
       });
 

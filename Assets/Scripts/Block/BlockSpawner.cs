@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using static Unity.Collections.AllocatorManager;
 
 public class BlockSpawner : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class BlockSpawner : MonoBehaviour
   }
 
   // 랜덤한 위치에 블럭 소환
-  void SpawnBlock()
+  public void SpawnBlock()
   {
     int count = Random.Range(1, spawnPoints.Length);
 
@@ -50,6 +51,19 @@ public class BlockSpawner : MonoBehaviour
   void OnDestroy()
   {
     PlayerController.Instance.OnPlayerReady -= SpawnBlock;  // 이벤트 구독 해제
+  }
+
+  public void RestartGame()
+  {
+    Block[] blocks = FindObjectsByType<Block>(FindObjectsSortMode.None);
+
+    foreach (Block block in blocks)
+    {
+      Destroy(block.gameObject);
+    }
+
+    SpawnBlock();
+
   }
 
 }

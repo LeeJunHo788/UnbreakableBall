@@ -108,6 +108,8 @@ public class PlayerController : MonoBehaviour
 
   private void SetDirection()
   {
+    if (isGameOver) return;
+
     if (!isReady) return;
 
     // 터치가 활성 중이면 키보드 입력 무시
@@ -127,7 +129,9 @@ public class PlayerController : MonoBehaviour
   // 공 발사 메서드
   void BallFire()
   {
-    if(isReady)
+    if (isGameOver) return;
+
+    if (isReady)
     {
       float angleRad = angle * Mathf.Deg2Rad;
       Vector2 dir = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
@@ -159,12 +163,6 @@ public class PlayerController : MonoBehaviour
 
   public void IsReady()
   {
-    if(ps.hp <= 0)
-    {
-      GameManager.Instance.GameOver();
-      return;
-    }
-
     isReady = true;
     directionObj.gameObject.SetActive(true);
 
