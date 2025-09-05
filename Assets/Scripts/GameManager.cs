@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
 
   public void ForcedReady()
   {
+				Debug.Log("»£√‚");
+
     if (!PlayerController.Instance.canReady || PlayerController.Instance.isGameOver ) return;
 
     if(PlayerController.Instance.isStartPosFixed)

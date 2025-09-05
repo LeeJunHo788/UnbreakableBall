@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
   [HideInInspector] public Rigidbody2D rb;
   [HideInInspector] public Vector3 startPos;
   [HideInInspector] public bool isStartPosFixed = false;
-  [HideInInspector] public bool canReady = true;
+  public bool canReady = true;
   [HideInInspector] public bool isGameOver = false;
   float angle = 90f;         // 현재 각도
   float angleSpeed = 60f;   // 회전 속도

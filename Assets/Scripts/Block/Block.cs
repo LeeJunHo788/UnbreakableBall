@@ -63,8 +63,7 @@ public class Block : MonoBehaviour
   // 아래 이동 함수
   void MoveDown()
   {
-    // if(advanceCount == 25)
-    if(advanceCount == 2)
+    if(advanceCount == 25)
     {
       SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
       TMP_Text[] tmps = GetComponentsInChildren<TMP_Text>(true);

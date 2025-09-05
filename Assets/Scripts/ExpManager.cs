@@ -30,6 +30,7 @@ public class ExpManager : MonoBehaviour
 
   void Start()
   {
+				level = 1;
     currentExp = 0;
     maxExp = 3;
   }
