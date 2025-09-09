@@ -142,6 +142,11 @@ public class PlayerController : MonoBehaviour
       directionObj.gameObject.SetActive(false);
       isReady = false;
 
+      DOVirtual.DelayedCall(3f, () =>
+      {
+        canReady = true;
+      });
+
     }
   }
 
@@ -151,7 +156,6 @@ public class PlayerController : MonoBehaviour
     {
       yield return new WaitForSeconds(ps.shootInterval);
 
-      Debug.Log(startPos);
       GameObject subBall = Instantiate(ballPrefab, startPos, Quaternion.Euler(0, 0, angle));
       Rigidbody2D subRb = subBall.GetComponent<Rigidbody2D>();
       subBalls.Add(subBall);

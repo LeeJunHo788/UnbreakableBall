@@ -16,7 +16,10 @@ public class AugmentManager : MonoBehaviour
 		public GameObject player;
 		public PlayerStats playerStats;
 
-		public void AugmentApply(int currentLevel)
+		public event System.Action OnAugmentFinished;
+
+
+  public void AugmentApply(int currentLevel)
 		{
 				// 조건 검사에 필요한 값 구조체 인스턴스 생성
 				var ctx = new AugmentCheckContext
@@ -29,17 +32,25 @@ public class AugmentManager : MonoBehaviour
 				List<AugmentDefinition> candidates = new List<AugmentDefinition>();
 				foreach (var aug in allAugments)
 				{
-						// 등장 조건에 만족하면서 증강을 가지고 있지 않을 경우 등장
-						if (aug.IsEligible(ctx) && !owned.Contains(aug.id)) 
-								candidates.Add(aug);
-				}
+      // 등장 조건에 만족하면 등장
+      if (aug.IsEligible(ctx) && (aug.AllowDuplicate || !owned.Contains(aug.id)))
+      {
+        candidates.Add(aug);
+      }
+    }
 
 				// 셔플
 				Shuffle(candidates); 
 				var shown = candidates.Count > 3 ? candidates.GetRange(0, 3) : candidates;
 
-				// 게임 일시정지 UI 표시
-				Time.timeScale = 0f; //  UI는 UnscaledTime으로 동작하도록 설정
+				// 후보가 없으면 즉시 종료
+    if (shown.Count == 0)
+    {
+      OnAugmentFinished?.Invoke(); 
+      return;
+    }
+
+    // UI 표시
 				choiceUI.Show(shown, OnPickAugment);
 		}
 
@@ -57,10 +68,12 @@ public class AugmentManager : MonoBehaviour
 				picked.GetEffect()?.Apply(runtime);
 				owned.Add(picked.id);
 
-				// 재개
-				choiceUI.Hide();
-				Time.timeScale = 1f;
-		}
+    // 재개
+    choiceUI.Hide(() =>                       
+    {
+      OnAugmentFinished?.Invoke();            
+    });
+  }
 
 		// 셔플
 		private void Shuffle<T>(IList<T> list)

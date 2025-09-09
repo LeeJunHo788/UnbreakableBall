@@ -2,10 +2,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using System.Collections;
 
 public class ExpManager : MonoBehaviour
 {
   public static ExpManager Instance { get; set; }
+
+  public AugmentManager augmentManager;
 
   public Slider expSlider;
   public TextMeshProUGUI levelText;
@@ -14,8 +17,19 @@ public class ExpManager : MonoBehaviour
   [HideInInspector] public float maxExp;
   [HideInInspector] public int level = 1;
 
+  [SerializeField] private int augmentLevel = 3;
+
   private bool _isAnimating = false;
   private float _queuedExp = 0f;
+
+  // 증강 대기 개수
+  private int _pendingAugmentCount = 0;
+
+  // [추가] 현재 증강 UI가 떠있는지 여부(중복 호출 방지)
+  private bool _isAugmentShowing = false;
+
+  // [추가] 증강 UI 참조(인스펙터에 할당) 혹은 싱글톤 사용
+  [SerializeField] private AugmentChoiceUI augmentUI;
 
   private void Awake()
   {
@@ -30,9 +44,7 @@ public class ExpManager : MonoBehaviour
 
   void Start()
   {
-				level = 1;
-    currentExp = 0;
-    maxExp = 3;
+    ResetExp();
   }
 
   public void AddExp(float addValue)
@@ -60,7 +72,6 @@ public class ExpManager : MonoBehaviour
 
   private void AnimateGain(float remaining)
   {
-    // 한 스텝: 현재 레벨에서 max까지 채우거나, 남은 만큼만 채우기
     float toMax = maxExp - currentExp;
     float step = Mathf.Min(remaining, toMax);
 
@@ -99,6 +110,11 @@ public class ExpManager : MonoBehaviour
                               // 레벨업 수치 조정
                               maxExp = MaxExpUpdate(level);
 
+                              if (level % augmentLevel == 0)
+                              {
+                                _pendingAugmentCount++;
+                              }
+
                               // 남은 경험치가 있으면 다음 레벨 게이지를 이어서 채움
                               if (remaining > 0f) AnimateGain(remaining);
                               else ProcessQueuedExp(); // 큐에 누적된 추가 입력 처리
@@ -129,7 +145,57 @@ public class ExpManager : MonoBehaviour
     maxExp = 3;
     level = 1;
     _queuedExp = 0;
+    augmentLevel = 3;
 
     expSlider.value = 0;
+  }
+
+  private void TryShowAugment()
+  {
+    if (_isAugmentShowing) return;
+    if (_pendingAugmentCount <= 0) return;
+
+    _isAugmentShowing = true;
+
+    Time.timeScale = 0f;                
+    augmentManager.AugmentApply(level); 
+  }
+
+
+  private void OnEnable()
+  {
+    augmentManager.OnAugmentFinished += OnAugmentFinished;
+    StartCoroutine(Co_SubscribeReady());
+  }
+
+  private IEnumerator Co_SubscribeReady()
+  {
+    while (PlayerController.Instance == null) yield return null;
+    PlayerController.Instance.OnPlayerReady += TryShowAugment; // [추가]
+  }
+
+  private void OnDisable()
+  {
+    if (PlayerController.Instance != null)
+      PlayerController.Instance.OnPlayerReady -= TryShowAugment; // [추가]
+    augmentManager.OnAugmentFinished -= OnAugmentFinished;
+  }
+
+  private void OnAugmentFinished()
+  {
+    _isAugmentShowing = false;
+
+    if (_pendingAugmentCount > 0)
+      _pendingAugmentCount--; 
+
+    // 전부 끝나면 그때만 재개
+    if (_pendingAugmentCount > 0)
+    {
+      TryShowAugment();     
+    }
+    else
+    {
+      Time.timeScale = 1f; 
+    }
   }
 }
