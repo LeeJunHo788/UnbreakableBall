@@ -76,12 +76,19 @@ public class AugmentChoiceUI : MonoBehaviour
 
         w.button.onClick.RemoveAllListeners();
 
+								int index = i;
+								var def = d;
+
         w.button.onClick.AddListener(() =>
         {
-          PlaySelectAnimation(i, () =>
+          PlaySelectAnimation(index, () =>
           {
-            _onPick?.Invoke(d);
-            Hide();
+												Hide(() =>
+												{
+														_onPick?.Invoke(def);
+
+												});
+												
           });
         });
         

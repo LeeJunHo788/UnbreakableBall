@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 1854129381746578403}
   - component: {fileID: 3949809619456328964}
   - component: {fileID: 6520845423864002995}
-  - component: {fileID: 8960106500390745875}
+  - component: {fileID: 1458732052194430174}
   m_Layer: 0
   m_Name: BlueBlock
   m_TagString: Block
@@ -281,8 +281,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0978b7477ddb5624ebc3362fd21d620d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!60 &8960106500390745875
-PolygonCollider2D:
+--- !u!61 &1458732052194430174
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -325,21 +325,8 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.48409796, y: 0.5052147}
-      - {x: -0.47786617, y: 0.5110321}
-      - {x: -0.5070534, y: 0.52111053}
-      - {x: -0.5015335, y: 0.4898672}
-      - {x: -0.50128937, y: -0.49044275}
-      - {x: -0.50282097, y: -0.5074682}
-      - {x: -0.49373913, y: -0.49924612}
-      - {x: 0.48688745, y: -0.5017357}
-      - {x: 0.5041728, y: -0.50556374}
-      - {x: 0.50219727, y: -0.4635744}
-      - {x: 0.5038018, y: 0.47122383}
-      - {x: 0.50973654, y: 0.51669216}
-  m_UseDelaunayMesh: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &8396587884993915313
 GameObject:
   m_ObjectHideFlags: 0

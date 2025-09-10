@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
   {
 				Debug.Log("»£√‚");
 
-    if (!PlayerController.Instance.canReady || PlayerController.Instance.isGameOver ) return;
+    if (!PlayerController.Instance.canForceReady || PlayerController.Instance.isGameOver ) return;
 
     if(PlayerController.Instance.isStartPosFixed)
     {

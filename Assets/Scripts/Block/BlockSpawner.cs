@@ -6,6 +6,7 @@ using static Unity.Collections.AllocatorManager;
 
 public class BlockSpawner : MonoBehaviour
 {
+		public AugmentManager augmentManager;
   public GameObject blockObject;
   Transform[] spawnPoints;
 
@@ -20,11 +21,14 @@ public class BlockSpawner : MonoBehaviour
 
 
     PlayerController.Instance.OnPlayerReady += SpawnBlock;  // 이벤트 구독
+				augmentManager.OnAugmentFinished += SpawnBlock;
   }
 
   // 랜덤한 위치에 블럭 소환
   public void SpawnBlock()
   {
+				if (ExpManager.Instance._pendingAugmentCount != 0) return;
+
     int count = Random.Range(1, spawnPoints.Length);
 
     List<int> rnd = new List<int>();
@@ -51,6 +55,7 @@ public class BlockSpawner : MonoBehaviour
   void OnDestroy()
   {
     PlayerController.Instance.OnPlayerReady -= SpawnBlock;  // 이벤트 구독 해제
+				augmentManager.OnAugmentFinished -= SpawnBlock;
   }
 
   public void RestartGame()

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 using System.Collections;
+using System;
 
 public class ExpManager : MonoBehaviour
 {
@@ -22,16 +23,21 @@ public class ExpManager : MonoBehaviour
   private bool _isAnimating = false;
   private float _queuedExp = 0f;
 
-  // 증강 대기 개수
-  private int _pendingAugmentCount = 0;
+		[HideInInspector] public int _pendingAugmentCount = 0;					// 증강 대기 개수
+  private bool _isAugmentShowing = false;			// 증강을 보여주는 상태 확인 변수
 
-  // [추가] 현재 증강 UI가 떠있는지 여부(중복 호출 방지)
-  private bool _isAugmentShowing = false;
+		// 대기 상태 돌입 이벤트
+		public event Action OnIdle;
 
-  // [추가] 증강 UI 참조(인스펙터에 할당) 혹은 싱글톤 사용
-  [SerializeField] private AugmentChoiceUI augmentUI;
+		public bool CanReadyNow
+		{
+				get
+				{
+						return !_isAnimating  && !_isAugmentShowing;
+				}
+		}
 
-  private void Awake()
+		private void Awake()
   {
     if (Instance != null && Instance != this)
     {
@@ -64,7 +70,8 @@ public class ExpManager : MonoBehaviour
     if (gain <= 0f)
     {
       _isAnimating = false;
-      return;
+						NotifyIdleIfFree();
+						return;
     }
 
     AnimateGain(gain);
@@ -99,7 +106,7 @@ public class ExpManager : MonoBehaviour
                  PlayerController.Instance.ps.AddBallCount();
 
                  DOTween.Sequence()
-                            .AppendInterval(0.1f)   // 가득 찬 모습을 잠깐 유지
+                            .AppendInterval(0.075f)   // 가득 찬 모습을 잠깐 유지
                             .Append(expSlider.DOValue(0f, 0.1f).SetEase(Ease.Linear)) // 게이지 리셋 애니메이션
                             .OnComplete(() =>
                             {
@@ -150,7 +157,15 @@ public class ExpManager : MonoBehaviour
     expSlider.value = 0;
   }
 
-  private void TryShowAugment()
+		private void NotifyIdleIfFree()
+		{
+				if (CanReadyNow)
+				{
+						OnIdle?.Invoke();
+				}
+		}
+
+		private void TryShowAugment()
   {
     if (_isAugmentShowing) return;
     if (_pendingAugmentCount <= 0) return;
@@ -171,13 +186,13 @@ public class ExpManager : MonoBehaviour
   private IEnumerator Co_SubscribeReady()
   {
     while (PlayerController.Instance == null) yield return null;
-    PlayerController.Instance.OnPlayerReady += TryShowAugment; // [추가]
+    PlayerController.Instance.OnPlayerReady += TryShowAugment; 
   }
 
   private void OnDisable()
   {
     if (PlayerController.Instance != null)
-      PlayerController.Instance.OnPlayerReady -= TryShowAugment; // [추가]
+      PlayerController.Instance.OnPlayerReady -= TryShowAugment;
     augmentManager.OnAugmentFinished -= OnAugmentFinished;
   }
 
@@ -195,7 +210,7 @@ public class ExpManager : MonoBehaviour
     }
     else
     {
-      Time.timeScale = 1f; 
-    }
+      Time.timeScale = 1f;
+				}
   }
 }

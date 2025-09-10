@@ -1,9 +1,9 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Augments/Effects/FlatAttackBonus")]
-public class AttackBonusEffect : ScriptableObject, IAugmentEffect
+[CreateAssetMenu(menuName = "Augments/Effects/AttackPlus")]
+public class AttackPlus : ScriptableObject, IAugmentEffect
 		{
-		public int amount = 10;
+		public float amount = 1;
 
 		public void Apply(AugmentRuntimeContext ctx)
 				{

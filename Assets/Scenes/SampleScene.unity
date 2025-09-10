@@ -1351,7 +1351,7 @@ MonoBehaviour:
   maxExp: 100
   level: 0
   augmentLevel: 1
-  augmentUI: {fileID: 0}
+  _pendingAugmentCount: 0
 --- !u!1 &555015559
 GameObject:
   m_ObjectHideFlags: 0
@@ -3029,6 +3029,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae990e4e3d1726c4e9ec448517786d75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  augmentManager: {fileID: 1620710335}
   blockObject: {fileID: 7170140624954319042, guid: 40efa19305fdbcf40a9a73c64e31e7d1, type: 3}
 --- !u!1 &1238508597
 GameObject:
@@ -4100,7 +4101,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.5582843, g: 0, b: 1, a: 1}
+  m_Color: {r: 0.21568628, g: 0.1882353, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -4204,7 +4205,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   startPos: {x: 0, y: 0, z: 0}
   isStartPosFixed: 0
-  canReady: 0
+  canForceReady: 1
   isGameOver: 0
   activeBallCount: 0
   isReady: 1

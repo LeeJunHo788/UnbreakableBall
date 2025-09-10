@@ -14,7 +14,7 @@ public class PlayerStats : MonoBehaviour
   [HideInInspector] public int hp = 10;
 
 
-  [HideInInspector] public bool isAdded = false;
+  [HideInInspector] public int isAdded = 0;
 
   void Start()
   {
@@ -34,7 +34,7 @@ public class PlayerStats : MonoBehaviour
 
   public void AddBallCount()
   {
-    isAdded = true;
+				isAdded++;
   }
 
   public void StartGame()

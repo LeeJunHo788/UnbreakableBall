@@ -16,10 +16,10 @@ public class PlayerController : MonoBehaviour
   [HideInInspector] public Rigidbody2D rb;
   [HideInInspector] public Vector3 startPos;
   [HideInInspector] public bool isStartPosFixed = false;
-  public bool canReady = true;
+  public bool canForceReady = true;
   [HideInInspector] public bool isGameOver = false;
-  float angle = 90f;         // 현재 각도
-  float angleSpeed = 60f;   // 회전 속도
+  float angle = 90f;         
+  float angleSpeed = 60f;
 
   List<GameObject> subBalls = new List<GameObject>();   // 서브 공 리스트
 
@@ -35,7 +35,8 @@ public class PlayerController : MonoBehaviour
   public PlayerStats ps;
 
 
-  public event Action OnPlayerReady;
+		public event Action OnPlayerReady;
+		private bool _pendingReadyOnce = false;
 
   private void Awake()
   {
@@ -125,13 +126,12 @@ public class PlayerController : MonoBehaviour
     }
   }
 
-  // 공 추가 생성 메서드
   // 공 발사 메서드
   void BallFire()
   {
     if (isGameOver) return;
 
-    if (isReady)
+    if (isReady && Time.timeScale != 0)
     {
       float angleRad = angle * Mathf.Deg2Rad;
       Vector2 dir = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
@@ -144,12 +144,13 @@ public class PlayerController : MonoBehaviour
 
       DOVirtual.DelayedCall(3f, () =>
       {
-        canReady = true;
+								canForceReady = true;
       });
 
     }
   }
 
+  // 공 추가 생성 메서드
   IEnumerator AddBall(Vector2 dir)
   {
     for (int i = 0; i < ps.additionalBallCount; i++)
@@ -167,13 +168,21 @@ public class PlayerController : MonoBehaviour
 
   public void IsReady()
   {
-    isReady = true;
-    directionObj.gameObject.SetActive(true);
+				if (ExpManager.Instance != null && !ExpManager.Instance.CanReadyNow)
+				{
+						if (!_pendingReadyOnce)
+						{
+								_pendingReadyOnce = true;
+								ExpManager.Instance.OnIdle += OnExpIdle_ReadyOnce;
+						}
+						return;
+				}
 
-    if (ps.isAdded)
+
+    if (ps.isAdded != 0)
     {
-      ps.additionalBallCount++;
-      ps.isAdded = false;
+						ps.additionalBallCount += ps.isAdded;
+						ps.isAdded = 0;
 
     }
 
@@ -183,19 +192,33 @@ public class PlayerController : MonoBehaviour
     }
     subBalls.Clear();
 
+				isReady = true;
+				directionObj.gameObject.SetActive(true);
+
     activeBallCount = 0;
 
-    OnPlayerReady?.Invoke();    // 준비 이벤트 호출
     StageManager.Instance.NextStage();
+    OnPlayerReady?.Invoke();    // 준비 이벤트 호출
 
-    canReady = false;
+
+				canForceReady = false;
     DOVirtual.DelayedCall(3f, () =>
     {
-      canReady = true;
+						canForceReady = true;
     });
   }
 
-  private void OnCollisionEnter2D(Collision2D collision)
+		private void OnExpIdle_ReadyOnce()
+		{
+				if (ExpManager.Instance != null)
+						ExpManager.Instance.OnIdle -= OnExpIdle_ReadyOnce;
+
+				_pendingReadyOnce = false; 
+				IsReady(); 
+		}
+
+
+		private void OnCollisionEnter2D(Collision2D collision)
   {
     if (collision.collider.CompareTag("DSideBar"))
     {

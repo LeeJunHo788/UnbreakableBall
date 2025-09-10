@@ -24,7 +24,7 @@ public class SubBallController : MonoBehaviour
       {
         PlayerController.Instance.startPos = new Vector3(transform.position.x, -6.57f);
         PlayerController.Instance.isStartPosFixed = true;
-								PlayerController.Instance.canReady = true;
+								PlayerController.Instance.canForceReady = true;
 								isFirstDown = true;
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         rb.linearVelocity = Vector2.zero;

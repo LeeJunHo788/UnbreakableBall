@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d22ee602b1053b248a6ff45ebcebd47a, type: 3}
-  m_Name: AttPlus2
+  m_Name: "AttPlus \u2160"
   m_EditorClassIdentifier: 
-  amount: 2
+  amount: 0
