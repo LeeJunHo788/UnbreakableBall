@@ -1350,7 +1350,7 @@ MonoBehaviour:
   currentExp: 0
   maxExp: 100
   level: 0
-  augmentLevel: 1
+  augmentLevel: 5
   _pendingAugmentCount: 0
 --- !u!1 &555015559
 GameObject:
@@ -1896,12 +1896,12 @@ GameObject:
   - component: {fileID: 768005532}
   - component: {fileID: 768005531}
   m_Layer: 0
-  m_Name: Static Sprite
+  m_Name: BallAddItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &768005531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2156,6 +2156,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 862413389}
   m_CullTransparentMesh: 1
+--- !u!1 &868027383
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 868027384}
+  m_Layer: 0
+  m_Name: "\u2160, \u2161, \u2162, \u2163, \u2164, \u2165, \u2166, \u2167, \u2168,
+    \u2169"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &868027384
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868027383}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.8420627, y: -0.36800376, z: -0.06120724}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &908082894
 GameObject:
   m_ObjectHideFlags: 0
@@ -3711,15 +3743,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allAugments:
   - {fileID: 11400000, guid: 0c7da8a052b90dd4599046370965c62f, type: 2}
-  - {fileID: 11400000, guid: af279d30c4f180948a5d3e0185afa935, type: 2}
-  - {fileID: 11400000, guid: fb549c64c65be9a498049b66119b3565, type: 2}
-  - {fileID: 11400000, guid: 490ad32a316fdca48995e862fc391a1c, type: 2}
-  - {fileID: 11400000, guid: 2e0b77a1db0b39c4d88f50a41d37cbb1, type: 2}
-  - {fileID: 11400000, guid: 6b79462c9761b9f44bcdc9a5fde9605b, type: 2}
-  - {fileID: 11400000, guid: 5bedaac045e3072418b922f6b6b46d68, type: 2}
-  - {fileID: 11400000, guid: 45b0f6506a1b0764eab80c4de4eb9d50, type: 2}
-  - {fileID: 11400000, guid: 06b2b98c24c6d6c47b4cdf5eff5b7c90, type: 2}
-  - {fileID: 11400000, guid: 092db730c28018b459cb1edcf914eefa, type: 2}
+  - {fileID: 11400000, guid: 2737fadc19479cc4e8ae1692d574b5e9, type: 2}
+  - {fileID: 11400000, guid: 3098aa0ac143c6b4fb879a3217003210, type: 2}
+  - {fileID: 11400000, guid: 560378aebacd81248991b861015a6576, type: 2}
+  - {fileID: 11400000, guid: 8ca9e84153353c94588f192d64171a87, type: 2}
   choiceUI: {fileID: 2051309427}
   player: {fileID: 1792367298}
   playerStats: {fileID: 1792367304}
@@ -4211,6 +4238,7 @@ MonoBehaviour:
   isReady: 1
   directionObj: {fileID: 2120290652}
   ballPrefab: {fileID: 6867125493992229313, guid: 408a53adf1771eb49b386e9070e80ce9, type: 3}
+  augmentManager: {fileID: 1620710335}
   ps: {fileID: 0}
 --- !u!114 &1792367304
 MonoBehaviour:
@@ -5258,3 +5286,4 @@ SceneRoots:
   - {fileID: 768005534}
   - {fileID: 1631698112}
   - {fileID: 1047962087}
+  - {fileID: 868027384}

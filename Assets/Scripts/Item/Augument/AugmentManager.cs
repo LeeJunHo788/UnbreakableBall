@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 public class AugmentManager : MonoBehaviour
 {
-		[Header("전체 증강 목록 (SO 에셋들)")]
+		[Header("전체 증강 목록")]
 		public List<AugmentDefinition> allAugments = new List<AugmentDefinition>();
 
-		[Header("보유한 증강 ID (런타임)")]
-		public HashSet<string> owned = new HashSet<string>();
+		[Header("보유한 증강 ID")]
+		public HashSet<string> owned = new HashSet<string>();	// 런타임
 
 		[Header("UI 연결")]
 		public AugmentChoiceUI choiceUI;
@@ -18,8 +18,11 @@ public class AugmentManager : MonoBehaviour
 
 		public event System.Action OnAugmentFinished;
 
+		// ============이벤트 허브=============
+		public event System.Action<BallHitContext> OnBlockHit;
 
-  public void AugmentApply(int currentLevel)
+
+		public void AugmentApply(int currentLevel)
 		{
 				// 조건 검사에 필요한 값 구조체 인스턴스 생성
 				var ctx = new AugmentCheckContext
@@ -65,8 +68,16 @@ public class AugmentManager : MonoBehaviour
 				};
 
 				// 효과 적용
-				picked.GetEffect()?.Apply(runtime);
-				owned.Add(picked.id);
+				picked.GetEffect()?.Apply(runtime);   // 1회성 증강
+
+
+				var reactive = picked.GetReactive(); // 반응형 증강
+				if (reactive != null)
+				{
+						reactive.Bind(this, in runtime);
+				}
+
+				owned.Add(picked.id);			// 보유 증강 리스트에 추가
 
     // 재개
     choiceUI.Hide(() =>                       
@@ -83,5 +94,15 @@ public class AugmentManager : MonoBehaviour
 						int j = Random.Range(i, list.Count);
 						(list[i], list[j]) = (list[j], list[i]);
 				}
+		}
+
+
+		// ========= 반응형 증강에 필요한 이벤트 바인딩 함수 ==============
+
+		public void RaiseBrickHit(in BallHitContext ctx)
+		{
+				var context = ctx;
+				context.stats = playerStats;
+				OnBlockHit?.Invoke(context);
 		}
 }

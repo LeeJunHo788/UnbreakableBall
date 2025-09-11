@@ -18,7 +18,7 @@ public class ExpManager : MonoBehaviour
   [HideInInspector] public float maxExp;
   [HideInInspector] public int level = 1;
 
-  [SerializeField] private int augmentLevel = 3;
+  [SerializeField] private int augmentLevel = 5;
 
   private bool _isAnimating = false;
   private float _queuedExp = 0f;
@@ -152,7 +152,7 @@ public class ExpManager : MonoBehaviour
     maxExp = 3;
     level = 1;
     _queuedExp = 0;
-    augmentLevel = 3;
+    augmentLevel = 5;
 
     expSlider.value = 0;
   }
