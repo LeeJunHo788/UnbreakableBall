@@ -37,7 +37,7 @@ public class Block : MonoBehaviour
     {
       SubBallController sc = collision.gameObject.GetComponent<SubBallController>();
 
-      dem = Mathf.RoundToInt(GetRandomAround(sc.att));
+      dem = Mathf.RoundToInt(GetRandomAround(sc.ss.att));
     }
 
     float finalDem = Mathf.Max(dem - def, 1); // 최소 데미지 보정

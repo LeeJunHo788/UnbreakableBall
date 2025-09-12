@@ -12,9 +12,10 @@ public class PlayerStats : MonoBehaviour
   [HideInInspector] public float moveSpeed = 10;
   [HideInInspector] public float shootInterval = 0.075f;
   [HideInInspector] public int hp = 10;
+		[HideInInspector] public float angle = 90f;
+		[HideInInspector] public float angleSpeed = 60f;
 
-
-  [HideInInspector] public int isAdded = 0;
+		[HideInInspector] public int isAdded = 0;
 
   void Start()
   {

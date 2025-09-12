@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba59428802385a74d91a8d35c1a42e2c, type: 3}
-  m_Name: 5. Split On Block Hit Reactive
+  m_Name: 7. Upgrade Split 2
   m_EditorClassIdentifier: 
   augmentKind: 1
-  id: 5
-  displayName: Split
-  description: 'First Ball splits when it hits a block, '
-  icon: {fileID: -6509232630430761034, guid: 2515912d63ee55848b46eef33cc72b2b, type: 3}
+  id: 7
+  displayName: "Upgrade Split \u2160"
+  description: Number of split balls +1
+  icon: {fileID: -425932943166127890, guid: ae8603b0d15541b46bbb9f644ea51edc, type: 3}
   allConditions:
-  - {fileID: 11400000, guid: 0ca95421193e98840b0c80a60af50c15, type: 2}
-  effectSO: {fileID: 0}
-  reactive: {fileID: 11400000, guid: bd70aaf9fc310b64fbdd3205deb7a363, type: 2}
+  - {fileID: 11400000, guid: 00cbc188a5026354fa379ea7e85c709a, type: 2}
+  effectSO: {fileID: 11400000, guid: 104c3e904210c8d43a0490e113270e95, type: 2}
+  reactive: {fileID: 0}

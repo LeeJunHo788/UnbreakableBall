@@ -14,6 +14,7 @@ public struct AugmentRuntimeContext
 {
 		public GameObject Player;
 		public PlayerStats Stats;
+		public AugmentManager manager;
 }
 
 // 조건 인터페이스 (하위 SO가 구현)

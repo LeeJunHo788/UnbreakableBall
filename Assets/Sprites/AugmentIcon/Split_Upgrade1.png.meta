@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 2515912d63ee55848b46eef33cc72b2b
+guid: e178d485e50581b46a6e8f47718b2a86
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6509232630430761034
-    second: Split_0
+      213: 5805586828209572934
+    second: Split_Upgrade1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,12 +100,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Split_0
+      name: Split_Upgrade1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 300
+        width: 301
         height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6bffac6f86f8aa5a0800000000000000
-      internalID: -6509232630430761034
+      spriteID: 64c4e100676919050800000000000000
+      internalID: 5805586828209572934
       vertices: []
       indices: 
       edges: []
@@ -134,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      Split_0: -6509232630430761034
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

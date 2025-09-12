@@ -5,13 +5,11 @@ public class SubBallController : MonoBehaviour
 {
   public bool isFirstDown = false;
 
-  public float att;
-  public float defIg;
+		public PlayerStats ss;
 
   private void Start()
   {
-    att = PlayerController.Instance.ps.att;
-    defIg = PlayerController.Instance.ps.defIg;
+				ss = PlayerController.Instance.ps;
   }
 
   private void OnCollisionEnter2D(Collision2D collision)

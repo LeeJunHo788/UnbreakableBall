@@ -18,10 +18,9 @@ public class PlayerController : MonoBehaviour
   [HideInInspector] public bool isStartPosFixed = false;
   public bool canForceReady = true;
   [HideInInspector] public bool isGameOver = false;
-  float angle = 90f;         
-  float angleSpeed = 60f;
 
-  List<GameObject> subBalls = new List<GameObject>();   // 서브 공 리스트
+
+		List<GameObject> subBalls = new List<GameObject>();   // 서브 공 리스트
 
   [HideInInspector]
   public int activeBallCount = 0;
@@ -57,12 +56,12 @@ public class PlayerController : MonoBehaviour
 
   private void Start()
   {
+    ps = GetComponent<PlayerStats>();
     rb = GetComponent<Rigidbody2D>();
     startPos = transform.position;
 
-    transform.rotation = Quaternion.Euler(0, 0, angle);
+    transform.rotation = Quaternion.Euler(0, 0, ps.angle);
 
-    ps = GetComponent<PlayerStats>();
 
     OnPlayerReady?.Invoke();
   }
@@ -97,8 +96,8 @@ public class PlayerController : MonoBehaviour
         float newAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         newAngle = Mathf.Clamp(newAngle, 20f, 170f);
 
-        angle = newAngle;
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+								ps.angle = newAngle;
+        transform.rotation = Quaternion.Euler(0, 0, ps.angle);
       }
 
       if (t.phase == UnityEngine.InputSystem.TouchPhase.Ended)
@@ -121,9 +120,9 @@ public class PlayerController : MonoBehaviour
 
     if (Mathf.Abs(input) > 0.0001f)
     {
-      angle += -input * angleSpeed * Time.deltaTime;
-      angle = Mathf.Clamp(angle, 20, 170);
-      transform.rotation = Quaternion.Euler(0, 0, angle);
+						ps.angle += -input * ps.angleSpeed * Time.deltaTime;
+						ps.angle = Mathf.Clamp(ps.angle, 20, 170);
+      transform.rotation = Quaternion.Euler(0, 0, ps.angle);
     }
   }
 
@@ -134,7 +133,7 @@ public class PlayerController : MonoBehaviour
 
     if (isReady && Time.timeScale != 0)
     {
-      float angleRad = angle * Mathf.Deg2Rad;
+      float angleRad = ps.angle * Mathf.Deg2Rad;
       Vector2 dir = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
 
       StartCoroutine(AddBall(dir));
@@ -158,7 +157,7 @@ public class PlayerController : MonoBehaviour
     {
       yield return new WaitForSeconds(ps.shootInterval);
 
-      GameObject subBall = Instantiate(ballPrefab, startPos, Quaternion.Euler(0, 0, angle));
+      GameObject subBall = Instantiate(ballPrefab, startPos, Quaternion.Euler(0, 0, ps.angle));
       Rigidbody2D subRb = subBall.GetComponent<Rigidbody2D>();
       subBalls.Add(subBall);
 
@@ -167,6 +166,13 @@ public class PlayerController : MonoBehaviour
     }
   }
 
+		public void RegisterSubBall(GameObject ball)
+		{
+				subBalls.Add(ball);
+		}
+
+
+		// 준비, 라운드 증가
   public void IsReady()
   {
 				if (ExpManager.Instance != null && !ExpManager.Instance.CanReadyNow)
@@ -200,7 +206,8 @@ public class PlayerController : MonoBehaviour
 
     StageManager.Instance.NextStage();
     OnPlayerReady?.Invoke();    // 준비 이벤트 호출
-
+				ps.additionalBallCount -= augmentManager.splitAugmentManager.tempAddedThisRound;
+				augmentManager.splitAugmentManager.tempAddedThisRound = 0;
 
 				canForceReady = false;
     DOVirtual.DelayedCall(3f, () =>
@@ -266,7 +273,7 @@ public class PlayerController : MonoBehaviour
 
         });
       }
-      angle = 90f;
+						ps.angle = 90f;
       
     }
 
@@ -282,7 +289,7 @@ public class PlayerController : MonoBehaviour
 								ballVelocity = rb.linearVelocity
 						};
 
-						augmentManager.RaiseBrickHit(in ctx);
+						augmentManager.RaiseBlockHit(in ctx);
 				}
 						
 

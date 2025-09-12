@@ -7,7 +7,10 @@ public class AugmentManager : MonoBehaviour
 		public List<AugmentDefinition> allAugments = new List<AugmentDefinition>();
 
 		[Header("보유한 증강 ID")]
-		public HashSet<string> owned = new HashSet<string>();	// 런타임
+		public HashSet<string> owned = new HashSet<string>(); // 런타임
+
+		// 보유한 반응형 증강
+		private List<IAugmentReactive> activeReactives = new List<IAugmentReactive>();
 
 		[Header("UI 연결")]
 		public AugmentChoiceUI choiceUI;
@@ -16,7 +19,18 @@ public class AugmentManager : MonoBehaviour
 		public GameObject player;
 		public PlayerStats playerStats;
 
+		[Header("증강 매니저")]
+		public SplitAugmentManager splitAugmentManager;
+
+
 		public event System.Action OnAugmentFinished;
+
+		private void Awake()
+		{
+				if (splitAugmentManager != null)
+						splitAugmentManager.Init(this, playerStats); // <-- [추가]
+		}
+
 
 		// ============이벤트 허브=============
 		public event System.Action<BallHitContext> OnBlockHit;
@@ -64,17 +78,19 @@ public class AugmentManager : MonoBehaviour
 				var runtime = new AugmentRuntimeContext
 				{
 						Player = player,
-						Stats = playerStats
+						Stats = playerStats,
+						manager = this
 				};
 
 				// 효과 적용
 				picked.GetEffect()?.Apply(runtime);   // 1회성 증강
-
-
-				var reactive = picked.GetReactive(); // 반응형 증강
+				
+				// 반응형 증강
+				var reactive = picked.GetReactive();
 				if (reactive != null)
 				{
 						reactive.Bind(this, in runtime);
+						activeReactives.Add(reactive);   // 보관
 				}
 
 				owned.Add(picked.id);			// 보유 증강 리스트에 추가
@@ -96,13 +112,25 @@ public class AugmentManager : MonoBehaviour
 				}
 		}
 
+		// 특정 타입의 반응형 증강 찾기
+		public T GetReactive<T>() where T : class, IAugmentReactive
+		{
+				foreach (var r in activeReactives)
+				{
+						if (r is T typed) return typed;
+				}
+				return null;
+		}
+
 
 		// ========= 반응형 증강에 필요한 이벤트 바인딩 함수 ==============
 
-		public void RaiseBrickHit(in BallHitContext ctx)
+		public void RaiseBlockHit(in BallHitContext ctx)
 		{
 				var context = ctx;
 				context.stats = playerStats;
 				OnBlockHit?.Invoke(context);
 		}
+
+		
 }

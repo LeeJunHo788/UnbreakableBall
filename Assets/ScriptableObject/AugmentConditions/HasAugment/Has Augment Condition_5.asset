@@ -9,11 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2905e0308d252c4fbef6a6d435d0fe8, type: 3}
-  m_Name: Split On Block Hit Reactive
+  m_Script: {fileID: 11500000, guid: e8a8c14413de6954b9c329916770de29, type: 3}
+  m_Name: Has Augment Condition_5
   m_EditorClassIdentifier: 
-  subBallPrefab: {fileID: 6867125493992229313, guid: 89bb61db8f77a224ab15e39afac844b8, type: 3}
-  onlyMainBall: 1
-  spreadDegrees: 45
-  spawnOffset: {x: 0, y: 0}
-  splitCount: 2
+  requiredAugmentId: 5
