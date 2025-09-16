@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba59428802385a74d91a8d35c1a42e2c, type: 3}
+  m_Name: 10. Split Att 2
+  m_EditorClassIdentifier: 
+  augmentKind: 1
+  id: 10
+  grade: 2
+  displayName: "Split Att+ \u2161"
+  description: Split ball Att x2
+  icon: {fileID: 7922190266312312546, guid: 1781270f11d24b245b81d4ed3165c2a6, type: 3}
+  allConditions:
+  - {fileID: 11400000, guid: 0906d5ee6f99932469b8aca0a56b96d6, type: 2}
+  effectSO: {fileID: 11400000, guid: 45c3908e9ddbbd546817f268ac08d286, type: 2}
+  reactive: {fileID: 0}

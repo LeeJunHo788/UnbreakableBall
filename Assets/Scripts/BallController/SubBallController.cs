@@ -14,6 +14,14 @@ public class SubBallController : MonoBehaviour
 
   private void OnCollisionEnter2D(Collision2D collision)
   {
+
+    if (!collision.collider.CompareTag("DSideBar"))
+    {
+      var rb = GetComponent<Rigidbody2D>();
+      rb.linearVelocity = PlayerController.ClampMinAngle(rb.linearVelocity, PlayerController.Instance.minReflectAngle);
+    }
+
+
     if (collision.collider.CompareTag("DSideBar"))
     {
       float speed = 20;
@@ -38,7 +46,7 @@ public class SubBallController : MonoBehaviour
       {
         PlayerController.Instance.activeBallCount++;
 
-        if(PlayerController.Instance.activeBallCount == PlayerController.Instance.ps.additionalBallCount + 1)
+        if (PlayerController.Instance.activeBallCount == PlayerController.Instance.ReturnBallThisRound)
         {
           PlayerController.Instance.isStartPosFixed = false;
           PlayerController.Instance.IsReady();

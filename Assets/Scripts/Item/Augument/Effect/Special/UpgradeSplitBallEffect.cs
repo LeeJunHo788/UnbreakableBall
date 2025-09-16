@@ -5,6 +5,6 @@ public class UpgradeSplitBallEffect : ScriptableObject, IAugmentEffect
 {
 		public void Apply(AugmentRuntimeContext ctx)
 		{
-				ctx.manager.splitAugmentManager.UpgradeSplitCount(1);
+				ctx.manager.splitAM.UpgradeSplitCount(1);
 		}
 }

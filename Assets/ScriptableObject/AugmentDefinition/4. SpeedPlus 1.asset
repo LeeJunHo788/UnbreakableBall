@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   augmentKind: 0
   id: 4
+  grade: 3
   displayName: "Speed Plus \u2160"
   description: Speed+5
   icon: {fileID: -5089833575888238623, guid: 34df4c4df8c45a9479d5608222a6949f, type: 3}
   allConditions:
   - {fileID: 11400000, guid: 29106ce52e1681a4b9ab98767ca7b3de, type: 2}
   effectSO: {fileID: 11400000, guid: 5cbd2e6a81d27c54fa2992519a795001, type: 2}
+  reactive: {fileID: 0}

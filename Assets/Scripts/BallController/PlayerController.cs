@@ -18,9 +18,16 @@ public class PlayerController : MonoBehaviour
   [HideInInspector] public bool isStartPosFixed = false;
   public bool canForceReady = true;
   [HideInInspector] public bool isGameOver = false;
+  [HideInInspector] public float minReflectAngle = 5f;
+
+  // 회수해야 하는 공
+  private int returnBallThisRound = 0;
+  public int ReturnBallThisRound => returnBallThisRound;    // 읽기 전용
+  // 발사 시점의 추가 공
+  private int plannedAddsThisRound = 0;
 
 
-		List<GameObject> subBalls = new List<GameObject>();   // 서브 공 리스트
+  List<GameObject> subBalls = new List<GameObject>();   // 서브 공 리스트
 
   [HideInInspector]
   public int activeBallCount = 0;
@@ -36,6 +43,7 @@ public class PlayerController : MonoBehaviour
 
 
 		public event Action OnPlayerReady;
+  public event Action OnPlayerFire;
 		private bool _pendingReadyOnce = false;
 
   private void Awake()
@@ -73,6 +81,7 @@ public class PlayerController : MonoBehaviour
 
     HandleTouchAimAndFire();
     SetDirection();
+
   }
 
   void HandleTouchAimAndFire()
@@ -133,27 +142,29 @@ public class PlayerController : MonoBehaviour
 
     if (isReady && Time.timeScale != 0)
     {
+      canForceReady = false;
+
+      OnPlayerFire?.Invoke();
+
       float angleRad = ps.angle * Mathf.Deg2Rad;
       Vector2 dir = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
 
-      StartCoroutine(AddBall(dir));
+      plannedAddsThisRound = ps.additionalBallCount;      
+      returnBallThisRound = 1 + plannedAddsThisRound;     
+
+      StartCoroutine(AddBall(dir, plannedAddsThisRound)); 
       
       rb.linearVelocity = dir.normalized * ps.moveSpeed;
       directionObj.gameObject.SetActive(false);
       isReady = false;
 
-      DOVirtual.DelayedCall(3f, () =>
-      {
-								canForceReady = true;
-      });
-
     }
   }
 
   // 공 추가 생성 메서드
-  IEnumerator AddBall(Vector2 dir)
+  IEnumerator AddBall(Vector2 dir, int plannedCount)
   {
-    for (int i = 0; i < ps.additionalBallCount; i++)
+    for (int i = 0; i < plannedCount; i++)
     {
       yield return new WaitForSeconds(ps.shootInterval);
 
@@ -162,8 +173,9 @@ public class PlayerController : MonoBehaviour
       subBalls.Add(subBall);
 
       subRb.linearVelocity = dir.normalized * ps.moveSpeed;
-
     }
+
+    canForceReady = true;
   }
 
 		public void RegisterSubBall(GameObject ball)
@@ -171,11 +183,19 @@ public class PlayerController : MonoBehaviour
 				subBalls.Add(ball);
 		}
 
+  public void IncreaseReturnTargetForSplit()
+  {
+    returnBallThisRound++;
+  }
 
-		// 준비, 라운드 증가
+  // 준비, 라운드 증가
   public void IsReady()
   {
-				if (ExpManager.Instance != null && !ExpManager.Instance.CanReadyNow)
+
+    if (activeBallCount != returnBallThisRound)    // [수정]
+      return;
+
+    if (ExpManager.Instance != null && !ExpManager.Instance.CanReadyNow)
 				{
 						if (!_pendingReadyOnce)
 						{
@@ -204,12 +224,14 @@ public class PlayerController : MonoBehaviour
 
     activeBallCount = 0;
 
-    StageManager.Instance.NextStage();
     OnPlayerReady?.Invoke();    // 준비 이벤트 호출
-				ps.additionalBallCount -= augmentManager.splitAugmentManager.tempAddedThisRound;
-				augmentManager.splitAugmentManager.tempAddedThisRound = 0;
+    StageManager.Instance.NextStage();
 
-				canForceReady = false;
+    returnBallThisRound = 0;
+
+    ps.angle = 90f;
+
+    canForceReady = false;
     DOVirtual.DelayedCall(3f, () =>
     {
 						canForceReady = true;
@@ -221,12 +243,35 @@ public class PlayerController : MonoBehaviour
 				if (ExpManager.Instance != null)
 						ExpManager.Instance.OnIdle -= OnExpIdle_ReadyOnce;
 
-				_pendingReadyOnce = false; 
-				IsReady(); 
+				_pendingReadyOnce = false;
+
+    if (activeBallCount != returnBallThisRound)   
+      return;
+
+    IsReady(); 
 		}
 
+  public static Vector2 ClampMinAngle(Vector2 v, float minDeg)
+  {
+    float speed = v.magnitude;
 
-		private void OnCollisionEnter2D(Collision2D collision)
+    float minSin = Mathf.Sin(minDeg * Mathf.Deg2Rad);
+
+    if (Mathf.Abs(v.y) < speed * minSin)
+    {
+      float sx = Mathf.Sign(v.x == 0 ? 1f : v.x);
+      float sy = Mathf.Sign(v.y == 0 ? 1f : v.y);
+      float a = minDeg * Mathf.Deg2Rad;
+
+      Vector2 dir = new Vector2(sx * Mathf.Cos(a), sy * Mathf.Sin(a));
+      return dir.normalized * speed;
+    }
+
+    return v;
+  }
+
+
+  private void OnCollisionEnter2D(Collision2D collision)
   {
     if (collision.collider.CompareTag("DSideBar"))
     {
@@ -242,7 +287,7 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, 90);
         activeBallCount++;
 
-        if (activeBallCount == ps.additionalBallCount + 1)
+        if (activeBallCount == returnBallThisRound)
         {
 
           isStartPosFixed = false;
@@ -264,7 +309,7 @@ public class PlayerController : MonoBehaviour
           transform.rotation = Quaternion.Euler(0, 0, 90);
           activeBallCount++;
 
-          if (activeBallCount == ps.additionalBallCount + 1)
+          if (activeBallCount == returnBallThisRound)
           {
 
             isStartPosFixed = false;
@@ -273,8 +318,6 @@ public class PlayerController : MonoBehaviour
 
         });
       }
-						ps.angle = 90f;
-      
     }
 
 				if (collision.collider.CompareTag("Block"))
@@ -288,13 +331,15 @@ public class PlayerController : MonoBehaviour
 								hitPoint = collision.GetContact(0).point,
 								ballVelocity = rb.linearVelocity
 						};
-
 						augmentManager.RaiseBlockHit(in ctx);
 				}
-						
 
-				
 
-		}
+    if (!collision.collider.CompareTag("DSideBar"))
+    {
+      rb.linearVelocity = ClampMinAngle(rb.linearVelocity, minReflectAngle);
+    }
+
+  }
 
 }

@@ -22,7 +22,7 @@ public class AugmentChoiceUI : MonoBehaviour
 		[Header("옵션 슬롯")]
 		public OptionWidgets[] options = new OptionWidgets[3];
 
-  // [추가] 패널 등장/퇴장 연출용
+  // 패널 등장/퇴장 연출용
   [Header("Panel Anim")]
   [SerializeField] private CanvasGroup panelCg; 
   [SerializeField] private Transform content;   
@@ -45,7 +45,6 @@ public class AugmentChoiceUI : MonoBehaviour
 
   public void Show(List<AugmentDefinition> defs, Action<AugmentDefinition> onPick)
   {
-
     gameObject.SetActive(true);
     _onPick = onPick;
 
@@ -72,7 +71,10 @@ public class AugmentChoiceUI : MonoBehaviour
         var d = defs[i];
         if (w.title) w.title.text = d.displayName;
         if (w.desc) w.desc.text = d.description;
-        if (w.icon) w.icon.sprite = d.icon;
+        if (w.icon)
+        {
+          w.icon.sprite = d.icon;
+        }
 
         w.button.onClick.RemoveAllListeners();
 
@@ -94,8 +96,10 @@ public class AugmentChoiceUI : MonoBehaviour
         
 
         ResetOptionVisual(w);
-        
-								w.button.gameObject.SetActive(true);
+
+        if (w.cg) w.cg.alpha = 0f;
+
+        w.button.gameObject.SetActive(true);
 						}
 						else
 						{
@@ -112,6 +116,15 @@ public class AugmentChoiceUI : MonoBehaviour
 
     // 스케일 키우기
     if (content) seq.Join(content.DOScale(1f, enterDuration).SetEase(Ease.OutBack, 1.2f).SetUpdate(unscaledTime));
+
+    foreach (var w in options)
+    {
+      if (w.icon)
+      {
+        if (w?.cg) seq.Join(w.cg.DOFade(1f, enterDuration).SetUpdate(unscaledTime));
+        if (w?.icon) seq.Join(w.icon.DOColor(Color.white, enterDuration).SetUpdate(unscaledTime)); 
+      }
+    }
 
     seq.OnComplete(() =>
     {
@@ -133,6 +146,11 @@ public class AugmentChoiceUI : MonoBehaviour
     if (dimBg) seq.Join(dimBg.DOFade(0f, exitDuration).SetUpdate(unscaledTime));
     if (content) seq.Join(content.DOScale(0.95f, exitDuration).SetUpdate(unscaledTime));
     seq.Join(panelCg.DOFade(0f, exitDuration).SetUpdate(unscaledTime));
+
+    foreach (var w in options)
+    {
+      if (w?.cg) seq.Join(w.cg.DOFade(0f, exitDuration).SetUpdate(unscaledTime));
+    }
 
     seq.OnComplete(() =>
     {
@@ -156,12 +174,14 @@ public class AugmentChoiceUI : MonoBehaviour
       w.cg = w.button.gameObject.AddComponent<CanvasGroup>();
     }
 
+    w.cg.ignoreParentGroups = false;
+
     w.cg.alpha = 1f;
     w.cg.interactable = true;
     w.cg.blocksRaycasts = true;
 
-    // 살짝 축소되었다가 등장시키고 싶다면 여기서 처리 가능(지금은 기본 크기)
-    w.button.transform.localScale = Vector3.one; // [추가] 안전 초기화
+    // 살짝 축소되었다가 등장시키고 싶다면 여기서 처리 가능
+    w.button.transform.localScale = Vector3.one; // 안전 초기화
   }
 
   private void PlaySelectAnimation(int selectedIndex, Action onComplete)
@@ -179,13 +199,20 @@ public class AugmentChoiceUI : MonoBehaviour
         w.cg.interactable = false;
         w.cg.blocksRaycasts = false;
         w.cg.DOFade(0.3f, 0.15f).SetUpdate(unscaledTime);                 
-        w.button.transform.DOScale(0.98f, 0.15f).SetUpdate(unscaledTime); 
+        w.button.transform.DOScale(0.98f, 0.15f).SetUpdate(unscaledTime);
+       
       }
     }
 
     selected.button.transform
         .DOPunchScale(new Vector3(0.1f, 0.1f, 0f), 0.2f, 6, 0.8f)
         .SetUpdate(unscaledTime);
+
+    if (selected.icon)
+    {
+      selected.icon.DOColor(Color.white, 0.15f).SetUpdate(unscaledTime);
+    }
+
 
 
     DOVirtual.DelayedCall(0.25f, () => onComplete?.Invoke())

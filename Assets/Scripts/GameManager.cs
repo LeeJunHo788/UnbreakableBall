@@ -23,35 +23,34 @@ public class GameManager : MonoBehaviour
 
   public void ForcedReady()
   {
-				Debug.Log("호출");
+    var pc = PlayerController.Instance;
+    if (!pc.canForceReady || pc.isGameOver ) return;
 
-    if (!PlayerController.Instance.canForceReady || PlayerController.Instance.isGameOver ) return;
-
-    if(PlayerController.Instance.isStartPosFixed)
+    if(pc.isStartPosFixed)
     {
-      Debug.Log("위치 고정");
 
-      PlayerController.Instance.rb.linearVelocity = Vector2.zero;
-      PlayerController.Instance.transform.position = new Vector3(PlayerController.Instance.startPos.x, -6.59f);
-      PlayerController.Instance.transform.rotation = Quaternion.Euler(0, 0, 90);
-      PlayerController.Instance.isStartPosFixed = false;
-      PlayerController.Instance.IsReady();
+      pc.rb.linearVelocity = Vector2.zero;
+      pc.transform.position = new Vector3(pc.startPos.x, -6.59f);
+      pc.transform.rotation = Quaternion.Euler(0, 0, 90);
+      pc.isStartPosFixed = false;
+      pc.activeBallCount = pc.ReturnBallThisRound;
+      pc.IsReady();
     }
 
     else
     {
-      Debug.Log("위치 고정 안됨");
-      PlayerController.Instance.rb.linearVelocity = Vector2.zero;
+      pc.rb.linearVelocity = Vector2.zero;
 
-      PlayerController.Instance.transform.position = new Vector3(0, -6.59f);
-      PlayerController.Instance.startPos = new Vector3(PlayerController.Instance.transform.position.x, -6.57f);
-      PlayerController.Instance.isStartPosFixed = true;  // 고정 완료
+      pc.transform.position = new Vector3(0, -6.59f);
+      pc.startPos = new Vector3(pc.transform.position.x, -6.57f);
+      pc.isStartPosFixed = true;  // 고정 완료
 
-      PlayerController.Instance.transform.rotation = Quaternion.Euler(0, 0, 90);
-      PlayerController.Instance.activeBallCount++;
+      pc.transform.rotation = Quaternion.Euler(0, 0, 90);
+      pc.activeBallCount++;
 
-      PlayerController.Instance.isStartPosFixed = false;
-      PlayerController.Instance.IsReady();
+      pc.isStartPosFixed = false;
+      pc.activeBallCount = pc.ReturnBallThisRound;
+      pc.IsReady();
     }
 
   }

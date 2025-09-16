@@ -15,7 +15,7 @@ public class Block : MonoBehaviour
   protected virtual void Start()
   {
     hpText = GetComponentInChildren<TextMeshPro>();
-    hpText.text = hp.ToString();
+    hpText.text = Mathf.RoundToInt(hp).ToString();
 
     PlayerController.Instance.OnPlayerReady += MoveDown;
 
@@ -40,17 +40,7 @@ public class Block : MonoBehaviour
       dem = Mathf.RoundToInt(GetRandomAround(sc.ss.att));
     }
 
-    float finalDem = Mathf.Max(dem - def, 1); // 최소 데미지 보정
-
-    hp -= finalDem;
-    hpText.text = hp.ToString();
-
-    if (hp <= 0)
-    {
-      ExpManager.Instance.AddExp(maxHp);
-      DropItem();
-      Destroy(gameObject);
-    }
+    TakeDamage(dem);
 
   }
 
@@ -96,6 +86,22 @@ public class Block : MonoBehaviour
   void OnDestroy()
   {
     PlayerController.Instance.OnPlayerReady -= MoveDown;
+  }
+
+  public void TakeDamage(float dem)
+  {
+    hp -= dem;
+    // float finalDem = Mathf.Max(dem - def, 1); // 최소 데미지 보정
+    // hp -= finalDem;
+
+    hpText.text = Mathf.RoundToInt(hp).ToString();
+
+    if (hp <= 0)
+    {
+      ExpManager.Instance.AddExp(maxHp);
+      DropItem();
+      Destroy(gameObject);
+    }
   }
 
   protected virtual void DropItem() { }

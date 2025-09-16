@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   augmentKind: 0
   id: 1
+  grade: 4
   displayName: "Attack Plus \u2160"
   description: Attack Force +0.2
   icon: {fileID: -4659355159198974352, guid: c1b3f8f3517c9d945b87b4e0d218c704, type: 3}
   allConditions: []
   effectSO: {fileID: 11400000, guid: e1d981af77467b946b4c69ab96efc640, type: 2}
+  reactive: {fileID: 0}

@@ -4,17 +4,24 @@ using System.Collections.Generic;
 public enum AugmentKind
 {
   Normal,
+		Upgrade,
   Special
 }
 
 [CreateAssetMenu(menuName = "Augments/Augment Definition")]
 public class AugmentDefinition : ScriptableObject
 {
-		[Header("표시 정보")]
+		[Header("증강 종류")]
 		public AugmentKind augmentKind = AugmentKind.Normal;
+		[Header("증강 번호")]
 		public string id;
+		[Header("증강 등급")]
+		[Range(1,5)]public int grade;
+		[Header("증강 이름")]
 		public string displayName;
+		[Header("증강 설명")]
 		[TextArea] public string description;
+		[Header("증강 아이콘")]
 		public Sprite icon;
 
 		[HideInInspector]

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SplitAugmentManager : MonoBehaviour
@@ -18,18 +19,25 @@ public class SplitAugmentManager : MonoBehaviour
 		private int splitCount = 1;
 		private int bonusSplitCount = 0;
 
-		public void Init(AugmentManager owner, PlayerStats stats)
+  // 분열 쿨타임
+  private float splitCooldown = 0.3f;  
+  private float nextAllowedTimeMain = 0f;
+
+		// 분영 공 공격력 감소량
+		public float attReduceVal = 0.25f; 
+
+  public void Init(AugmentManager owner, PlayerStats stats)
 		{
 				augmentManager = owner;
 				playerStats = stats;
 		}
 
-		public void Activate(SplitOnBlockHitReactive so, in AugmentRuntimeContext ctx)
+		public void Activate(Split split, in AugmentRuntimeContext ctx)
 		{
-				subBallPrefab = so.subBallPrefab;
-				onlyMainBall = so.onlyMainBall;
-				spreadDegrees = so.spreadDegrees;
-				spawnOffset = so.spawnOffset;
+				subBallPrefab = split.subBallPrefab;
+				onlyMainBall = split.onlyMainBall;
+				spreadDegrees = split.spreadDegrees;
+				spawnOffset = split.spawnOffset;
 
 				if (!isActive)
 				{
@@ -46,7 +54,7 @@ public class SplitAugmentManager : MonoBehaviour
 						isActive = false;
 				}
 				bonusSplitCount = 0;
-		}
+  }
 
 		public void UpgradeSplitCount(int amount = 1)
 		{
@@ -58,7 +66,11 @@ public class SplitAugmentManager : MonoBehaviour
 				if (onlyMainBall && !ctx.isMainBall) return;
 				if (subBallPrefab == null || playerStats == null) return;
 
-				int totalSplit = splitCount + bonusSplitCount;
+    float now = Time.time; 
+    if (now < nextAllowedTimeMain) return;     
+    nextAllowedTimeMain = now + splitCooldown; 
+
+    int totalSplit = splitCount + bonusSplitCount;
 
 				for (int i = 0; i < totalSplit; i++)
 				{
@@ -69,7 +81,7 @@ public class SplitAugmentManager : MonoBehaviour
 
 						var stats = sub.GetComponent<PlayerStats>();
 						if (stats != null)
-								stats.att = stats.att / 4;
+								stats.att = stats.att * attReduceVal;
 
 						Vector2 dir = SetDirection(ctx);
 						while (Mathf.Abs(Vector2.Dot(dir, Vector2.right)) > 0.98f)
@@ -94,6 +106,6 @@ public class SplitAugmentManager : MonoBehaviour
 		public void RegisterTempAdditionalBall()
 		{
 				tempAddedThisRound++;
-				if (playerStats != null) playerStats.additionalBallCount++;
-		}
+    PlayerController.Instance.IncreaseReturnTargetForSplit();
+  }
 }

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba59428802385a74d91a8d35c1a42e2c, type: 3}
+  m_Name: 16. Canon Att 2
+  m_EditorClassIdentifier: 
+  augmentKind: 1
+  id: 16
+  grade: 1
+  displayName: "Canon Att+ \u2161"
+  description: Canon Att +15
+  icon: {fileID: 1151801690482958137, guid: f3dc2eb39985e394297af3fd9e2cdfe5, type: 3}
+  allConditions:
+  - {fileID: 11400000, guid: ec220376fc025cb46a712aa716b05906, type: 2}
+  effectSO: {fileID: 11400000, guid: 30fa5f5b248fe5042900770b3977e63b, type: 2}
+  reactive: {fileID: 0}

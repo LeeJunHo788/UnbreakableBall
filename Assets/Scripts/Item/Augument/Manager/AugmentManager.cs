@@ -12,29 +12,45 @@ public class AugmentManager : MonoBehaviour
 		// 보유한 반응형 증강
 		private List<IAugmentReactive> activeReactives = new List<IAugmentReactive>();
 
-		[Header("UI 연결")]
+  [Header("등장 가중치")]
+  public float grade1Weight = 1f; 
+  public float grade2Weight = 2f;  
+  public float grade3Weight = 3f;  
+  public float grade4Weight = 4f;
+
+  [Header("UI 연결")]
 		public AugmentChoiceUI choiceUI;
 
-		[Header("플레이어 참조")]
+  [Header("특수증강")]
+  public int specialMax = 3;                             
+  [SerializeField] private SpecialAugmentBar specialBar; 
+
+  private readonly List<string> ownedSpecialIds = new List<string>();
+  public int SpecialCount => ownedSpecialIds.Count;
+
+
+  [Header("플레이어 참조")]
 		public GameObject player;
 		public PlayerStats playerStats;
 
 		[Header("증강 매니저")]
-		public SplitAugmentManager splitAugmentManager;
+		public SplitAugmentManager splitAM;
+		public CanonAugmentManager canonAM;
 
 
 		public event System.Action OnAugmentFinished;
 
 		private void Awake()
 		{
-				if (splitAugmentManager != null)
-						splitAugmentManager.Init(this, playerStats); // <-- [추가]
+				if (splitAM != null)
+      splitAM.Init(this, playerStats); // <-- [추가]
 		}
-
 
 		// ============이벤트 허브=============
 		public event System.Action<BallHitContext> OnBlockHit;
 
+
+		// ============이벤트 허브=============
 
 		public void AugmentApply(int currentLevel)
 		{
@@ -47,28 +63,34 @@ public class AugmentManager : MonoBehaviour
 
 				// 조건 필터링
 				List<AugmentDefinition> candidates = new List<AugmentDefinition>();
-				foreach (var aug in allAugments)
+    bool canOfferSpecial = SpecialCount < specialMax;
+
+
+    foreach (var aug in allAugments)
 				{
-      // 등장 조건에 만족하면 등장
+						// 특수 증강 체크
+      if (!canOfferSpecial && aug.augmentKind == AugmentKind.Special)
+        continue;
+
+      // 기본 등장조건
       if (aug.IsEligible(ctx) && (aug.AllowDuplicate || !owned.Contains(aug.id)))
       {
         candidates.Add(aug);
       }
     }
 
-				// 셔플
-				Shuffle(candidates); 
-				var shown = candidates.Count > 3 ? candidates.GetRange(0, 3) : candidates;
-
 				// 후보가 없으면 즉시 종료
-    if (shown.Count == 0)
+    if (candidates.Count == 0)
     {
       OnAugmentFinished?.Invoke(); 
       return;
     }
+				
+				// 가중치에 의한 선택
+    var shown = WeightPick(candidates, 3);
 
     // UI 표시
-				choiceUI.Show(shown, OnPickAugment);
+    choiceUI.Show(shown, OnPickAugment);
 		}
 
 		// 증강 선택시 호출
@@ -93,7 +115,16 @@ public class AugmentManager : MonoBehaviour
 						activeReactives.Add(reactive);   // 보관
 				}
 
-				owned.Add(picked.id);			// 보유 증강 리스트에 추가
+				owned.Add(picked.id);   // 보유 증강 리스트에 추가
+
+    if (picked.augmentKind == AugmentKind.Special)
+    {
+      if (!ownedSpecialIds.Contains(picked.id))
+      {
+        ownedSpecialIds.Add(picked.id);																																																									
+        if (specialBar) specialBar.AddIcon(picked.icon);    
+      }
+    }
 
     // 재개
     choiceUI.Hide(() =>                       
@@ -102,13 +133,48 @@ public class AugmentManager : MonoBehaviour
     });
   }
 
-		// 셔플
-		private void Shuffle<T>(IList<T> list)
+		private List<AugmentDefinition> WeightPick(List<AugmentDefinition> augmentList, int n)
 		{
-				for (int i = 0; i < list.Count; i++)
+    n = Mathf.Clamp(n, 0, augmentList.Count);
+
+    var pool = new List<AugmentDefinition>(augmentList);
+    var result = new List<AugmentDefinition>(n);
+
+    for (int pick = 0; pick < n; pick++)
+    {
+      float total = 0f;
+      for (int i = 0; i < pool.Count; i++) total += GetWeightValue(pool[i]);
+
+      float r = Random.value * total;
+      float acc = 0f;
+						int chosenIndex = -1;
+
+      for (int i = 0; i < pool.Count; i++)
+      {
+        acc += GetWeightValue(pool[i]);
+        if (r <= acc)
+        {
+          chosenIndex = i;
+          break;
+        }
+      }
+
+      result.Add(pool[chosenIndex]);
+      pool.RemoveAt(chosenIndex);
+    }
+
+    return result;
+  }
+
+		private float GetWeightValue(AugmentDefinition aug)
+		{
+				switch (aug.grade)
 				{
-						int j = Random.Range(i, list.Count);
-						(list[i], list[j]) = (list[j], list[i]);
+						case 1: return grade1Weight;
+						case 2: return grade2Weight;
+						case 3: return grade3Weight;
+						case 4: return grade4Weight;
+						default: return 1;
 				}
 		}
 
