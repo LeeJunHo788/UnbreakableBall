@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba59428802385a74d91a8d35c1a42e2c, type: 3}
+  m_Name: 19. Canon Ball Count 2
+  m_EditorClassIdentifier: 
+  augmentKind: 1
+  id: 18
+  grade: 2
+  displayName: "Canon Count+ \u2161"
+  description: Canon Count +1
+  icon: {fileID: -6569830074788163510, guid: 48bf2d3dc1891eb409b2cb0c5c7b63a2, type: 3}
+  allConditions:
+  - {fileID: 11400000, guid: ac95e08022825df4aaab233aa71fae03, type: 2}
+  effectSO: {fileID: 11400000, guid: 830301b48c0b5fd4ba6703d000c1c40a, type: 2}
+  reactive: {fileID: 0}

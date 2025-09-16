@@ -4,7 +4,6 @@ using DG.Tweening;
 public class CanonAugmentManager : MonoBehaviour
 {
   private bool isActive = false;
-  private AugmentManager am;
   private PlayerController pc;
 
   private Vector2 spawnPos;

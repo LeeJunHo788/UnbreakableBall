@@ -9,6 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 083ffb35640c6be43b69ec0b91aff07b, type: 3}
-  m_Name: Upgrade Split Ball Att
+  m_Script: {fileID: 11500000, guid: 4b2075659bac6994f8b27e58b9e0b466, type: 3}
+  m_Name: Canon_Upgrade Range 2
   m_EditorClassIdentifier: 
+  amount: 0.75

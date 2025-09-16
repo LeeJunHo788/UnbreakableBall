@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 817f745668e54564e90bf35fd85185a8, type: 3}
-  m_Name: Upgrade Canon Att 3
+  m_Name: Canon_Upgrade Att 2
   m_EditorClassIdentifier: 
-  amount: 30
+  amount: 15

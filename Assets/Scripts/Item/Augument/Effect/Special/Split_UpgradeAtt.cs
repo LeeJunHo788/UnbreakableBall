@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Augments/Effects/UpgradeSplitAtt")]
-public class UpgradeSplitBallAtt : ScriptableObject, IAugmentEffect
+[CreateAssetMenu(menuName = "Augments/Effects/Upgrade/Split_UpgradeAtt")]
+public class Split_UpgradeAtt : ScriptableObject, IAugmentEffect
 {
   public void Apply(AugmentRuntimeContext ctx)
   {

@@ -36,6 +36,7 @@ public class AugmentManager : MonoBehaviour
 		[Header("증강 매니저")]
 		public SplitAugmentManager splitAM;
 		public CanonAugmentManager canonAM;
+		public SpreadAugmentManager spreadAM;
 
 
 		public event System.Action OnAugmentFinished;

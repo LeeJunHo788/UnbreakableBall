@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Caono_UpgradeRange 2_0: 7899862134156411639
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

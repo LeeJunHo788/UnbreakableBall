@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1781270f11d24b245b81d4ed3165c2a6
+guid: dc87638f70e3ef34cb08e6bd934d907f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7922190266312312546
-    second: Split_UpgradeAtt2_0
+      213: 1716343044801258008
+    second: Canon_Upgrade BallCount 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Split_UpgradeAtt2_0
+      name: Canon_Upgrade BallCount 1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2e64a9ad21641fd60800000000000000
-      internalID: 7922190266312312546
+      spriteID: 812671ad7eca1d710800000000000000
+      internalID: 1716343044801258008
       vertices: []
       indices: 
       edges: []
@@ -134,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      Split_UpgradeAtt2_0: 7922190266312312546
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

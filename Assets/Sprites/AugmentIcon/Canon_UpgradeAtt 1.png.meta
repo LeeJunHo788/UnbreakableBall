@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Canon_UpgradeAtt 1_0: 5097737205413631781
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
