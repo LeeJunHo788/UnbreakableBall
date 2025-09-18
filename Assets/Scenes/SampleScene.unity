@@ -5180,6 +5180,7 @@ MonoBehaviour:
   moveSpeed: 10
   shootInterval: 0.075
   hp: 100
+  expGain: 1
   angle: 90
   angleSpeed: 60
   isAdded: 0

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 816ac3d4fd044a645b6ce6abce19822f
+guid: 039dab73ce372df40aa9aac1e64921f1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6708188803399503240
-    second: Spread_Upgrade Att 1_0
+      213: 6445844113420128528
+    second: ExpPlus 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Spread_Upgrade Att 1_0
+      name: ExpPlus 1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 88d41e8dc26481d50800000000000000
-      internalID: 6708188803399503240
+      spriteID: 01113f1d11d347950800000000000000
+      internalID: 6445844113420128528
       vertices: []
       indices: 
       edges: []
@@ -134,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      Spread_Upgrade Att 1_0: 6708188803399503240
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

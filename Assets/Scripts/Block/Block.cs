@@ -91,8 +91,6 @@ public class Block : MonoBehaviour
   public void TakeDamage(float dem)
   {
     hp -= dem;
-    // float finalDem = Mathf.Max(dem - def, 1); // 최소 데미지 보정
-    // hp -= finalDem;
 
     hpText.text = Mathf.RoundToInt(hp).ToString();
 

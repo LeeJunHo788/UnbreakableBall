@@ -10,6 +10,7 @@ public class ExpManager : MonoBehaviour
   public static ExpManager Instance { get; set; }
 
   public AugmentManager augmentManager;
+		private PlayerController pc;
 
   public Slider expSlider;
   public TextMeshProUGUI levelText;
@@ -51,12 +52,13 @@ public class ExpManager : MonoBehaviour
   void Start()
   {
     ResetExp();
+				pc = PlayerController.Instance;
   }
 
   public void AddExp(float addValue)
   {
     // 애니메이션 중에는 큐에 쌓기만
-    _queuedExp += addValue;
+    _queuedExp += addValue * pc.ps.expGain;
     if (_isAnimating) return;
 
     _isAnimating = true;
@@ -89,32 +91,32 @@ public class ExpManager : MonoBehaviour
     expSlider.DOKill();
 
     
-    float baseDur = 0.5f;                              // 한 번 꽉 채우는 기준 시간
-    float dur = Mathf.Lerp(0.15f, baseDur, endNorm - startNorm); // 너무 짧아지지 않게 하한
+    float baseDur = 0.5f;                              
+    float dur = Mathf.Lerp(0.15f, baseDur, endNorm - startNorm); 
 
     expSlider.DOValue(endNorm, dur)
              .SetEase(Ease.OutCubic)
              .OnComplete(() =>
              {
-               currentExp += step;    // 실제 값 반영
-               remaining -= step;     // 남은 경험치 차감
+               currentExp += step;   
+               remaining -= step;     
 
-               // [케이스 1] 막 레벨업 도달
+              
                if (Mathf.Approximately(currentExp, maxExp))
                {
                  level++;
                  PlayerController.Instance.ps.AddBallCount();
 
                  DOTween.Sequence()
-                            .AppendInterval(0.075f)   // 가득 찬 모습을 잠깐 유지
-                            .Append(expSlider.DOValue(0f, 0.1f).SetEase(Ease.Linear)) // 게이지 리셋 애니메이션
+                            .AppendInterval(0.075f) // 딜레이
+                            .Append(expSlider.DOValue(0f, 0.1f).SetEase(Ease.Linear)) // 게이지 리셋
                             .OnComplete(() =>
                             {
                               levelText.text = $"Lv : {level}";
 
-                              currentExp = 0f; // 내부 값도 리셋
+                              currentExp = 0f;
 
-                              // 레벨업 수치 조정
+                              
                               maxExp = MaxExpUpdate(level);
 
                               if (level % augmentLevel == 0)
@@ -122,9 +124,9 @@ public class ExpManager : MonoBehaviour
                                 _pendingAugmentCount++;
                               }
 
-                              // 남은 경험치가 있으면 다음 레벨 게이지를 이어서 채움
+                              
                               if (remaining > 0f) AnimateGain(remaining);
-                              else ProcessQueuedExp(); // 큐에 누적된 추가 입력 처리
+                              else ProcessQueuedExp(); 
                             });
                }
                // 일반 경험치 채우기
