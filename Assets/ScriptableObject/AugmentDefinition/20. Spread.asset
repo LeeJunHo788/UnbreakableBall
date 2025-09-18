@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba59428802385a74d91a8d35c1a42e2c, type: 3}
+  m_Name: 20. Spread
+  m_EditorClassIdentifier: 
+  augmentKind: 2
+  id: 20
+  grade: 1
+  displayName: Spread
+  description: Spread the bullets
+  icon: {fileID: 6387070366799435074, guid: f2c957d08a7f9514aa726dbda0403436, type: 3}
+  allConditions: []
+  effectSO: {fileID: 0}
+  reactive: {fileID: 11400000, guid: b5a858162921ba9439cff77cce1d8510, type: 2}

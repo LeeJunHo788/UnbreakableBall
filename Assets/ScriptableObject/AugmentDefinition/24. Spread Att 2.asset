@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba59428802385a74d91a8d35c1a42e2c, type: 3}
-  m_Name: 10. Split Att 2
+  m_Name: 24. Spread Att 2
   m_EditorClassIdentifier: 
-  augmentKind: 1
-  id: 10
+  augmentKind: 0
+  id: 24
   grade: 2
-  displayName: "Split Att+ \u2161"
-  description: Split ball Att x2
-  icon: {fileID: 7922190266312312546, guid: 1781270f11d24b245b81d4ed3165c2a6, type: 3}
+  displayName: "Speard Att+ \u2161"
+  description: Spread Att *1.7
+  icon: {fileID: 2008028266825745250, guid: a43689f180c349d48b8b95ce95731173, type: 3}
   allConditions:
-  - {fileID: 11400000, guid: 0906d5ee6f99932469b8aca0a56b96d6, type: 2}
+  - {fileID: 11400000, guid: 1cf5121759a20be46bf2347a73bf7736, type: 2}
   - {fileID: 11400000, guid: 34363d45610c0484fbd60a20b68be966, type: 2}
-  effectSO: {fileID: 11400000, guid: 45c3908e9ddbbd546817f268ac08d286, type: 2}
+  effectSO: {fileID: 11400000, guid: a77e388180e49034b83535f0e92f8bdd, type: 2}
   reactive: {fileID: 0}

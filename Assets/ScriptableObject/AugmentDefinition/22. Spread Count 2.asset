@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba59428802385a74d91a8d35c1a42e2c, type: 3}
-  m_Name: 6. Split Count 1
+  m_Name: 22. Spread Count 2
   m_EditorClassIdentifier: 
   augmentKind: 1
-  id: 6
-  grade: 2
-  displayName: "Split Count+ \u2160"
-  description: Number of split balls +1
-  icon: {fileID: 5805586828209572934, guid: e178d485e50581b46a6e8f47718b2a86, type: 3}
+  id: 22
+  grade: 1
+  displayName: "Spread Count+ \u2161"
+  description: Spread Count +2
+  icon: {fileID: 190674606677992616, guid: 7f48d5835609c344daef46a1e569f8b3, type: 3}
   allConditions:
-  - {fileID: 11400000, guid: 4e2d14fbc7bc99049bbe7578a9e4f421, type: 2}
-  - {fileID: 11400000, guid: 9857fc00dbf9cf34cadfc79f171528e2, type: 2}
-  effectSO: {fileID: 11400000, guid: 104c3e904210c8d43a0490e113270e95, type: 2}
+  - {fileID: 11400000, guid: 6f14ab50d1ac49441b5ff04d1a38f0e0, type: 2}
+  - {fileID: 11400000, guid: 34363d45610c0484fbd60a20b68be966, type: 2}
+  effectSO: {fileID: 11400000, guid: 4862e30ad0e5ce34cb0d6c5a877e96cf, type: 2}
   reactive: {fileID: 0}

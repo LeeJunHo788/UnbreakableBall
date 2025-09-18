@@ -20,5 +20,6 @@ MonoBehaviour:
   icon: {fileID: -425932943166127890, guid: ae8603b0d15541b46bbb9f644ea51edc, type: 3}
   allConditions:
   - {fileID: 11400000, guid: d647c5c0f622fde4d85a73c44d2bae18, type: 2}
+  - {fileID: 11400000, guid: 34363d45610c0484fbd60a20b68be966, type: 2}
   effectSO: {fileID: 11400000, guid: 104c3e904210c8d43a0490e113270e95, type: 2}
   reactive: {fileID: 0}

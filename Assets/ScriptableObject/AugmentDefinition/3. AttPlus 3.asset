@@ -19,6 +19,6 @@ MonoBehaviour:
   description: Attack Force +1
   icon: {fileID: -4659355159198974352, guid: c1b3f8f3517c9d945b87b4e0d218c704, type: 3}
   allConditions:
-  - {fileID: 11400000, guid: 29106ce52e1681a4b9ab98767ca7b3de, type: 2}
+  - {fileID: 11400000, guid: 9857fc00dbf9cf34cadfc79f171528e2, type: 2}
   effectSO: {fileID: 11400000, guid: a3c00c9a66b77564d8ff44073ab97db0, type: 2}
   reactive: {fileID: 0}

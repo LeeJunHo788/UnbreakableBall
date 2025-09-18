@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba59428802385a74d91a8d35c1a42e2c, type: 3}
-  m_Name: 6. Split Count 1
+  m_Name: 23. Spread Att 1
   m_EditorClassIdentifier: 
-  augmentKind: 1
-  id: 6
+  augmentKind: 0
+  id: 23
   grade: 2
-  displayName: "Split Count+ \u2160"
-  description: Number of split balls +1
-  icon: {fileID: 5805586828209572934, guid: e178d485e50581b46a6e8f47718b2a86, type: 3}
+  displayName: "Speard Att+ \u2160"
+  description: Spread Att *1.5
+  icon: {fileID: 6708188803399503240, guid: 816ac3d4fd044a645b6ce6abce19822f, type: 3}
   allConditions:
-  - {fileID: 11400000, guid: 4e2d14fbc7bc99049bbe7578a9e4f421, type: 2}
+  - {fileID: 11400000, guid: ec7533eaefdd7a948b367014d5f1e248, type: 2}
   - {fileID: 11400000, guid: 9857fc00dbf9cf34cadfc79f171528e2, type: 2}
-  effectSO: {fileID: 11400000, guid: 104c3e904210c8d43a0490e113270e95, type: 2}
+  effectSO: {fileID: 11400000, guid: b0daa51b5cde03e448bae5ce54c5cf3b, type: 2}
   reactive: {fileID: 0}

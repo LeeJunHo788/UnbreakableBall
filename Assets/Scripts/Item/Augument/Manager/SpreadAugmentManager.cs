@@ -11,6 +11,7 @@ public class SpreadAugmentManager : MonoBehaviour
 
 		public float interval = 3;
 		public int spreadNum = 4;
+		public float spreadAtt = 0.1f;
 
 		[Header("할당 오브젝트")]
 		public GameObject spreadObject;
@@ -54,6 +55,8 @@ public class SpreadAugmentManager : MonoBehaviour
 								Vector2 dir = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
 
 								GameObject bullet = Instantiate(spreadObject, dir, Quaternion.identity);
+								SpreadObjectController soc = bullet.GetComponent<SpreadObjectController>();
+								soc.Init(spreadAtt * pc.ps.att);
 
 								Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
 								rb.linearVelocity = dir * 5f;
