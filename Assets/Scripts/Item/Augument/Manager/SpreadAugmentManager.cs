@@ -9,7 +9,7 @@ public class SpreadAugmentManager : MonoBehaviour
 
 		private bool isSpreadActive = false;
 
-		public float interval = 3;
+		public float interval = 1f;
 		public int spreadNum = 4;
 		public float spreadAtt = 0.1f;
 
@@ -54,8 +54,9 @@ public class SpreadAugmentManager : MonoBehaviour
 
 								Vector2 dir = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
 
-								GameObject bullet = Instantiate(spreadObject, dir, Quaternion.identity);
+								GameObject bullet = Instantiate(spreadObject, pos, Quaternion.identity);
 								SpreadObjectController soc = bullet.GetComponent<SpreadObjectController>();
+								Debug.Log(pc.ps.att);
 								soc.Init(spreadAtt * pc.ps.att);
 
 								Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();

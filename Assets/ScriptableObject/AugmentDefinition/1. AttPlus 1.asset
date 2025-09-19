@@ -17,7 +17,7 @@ MonoBehaviour:
   grade: 4
   displayName: "Attack Plus \u2160"
   description: Attack Force +0.2
-  icon: {fileID: -4659355159198974352, guid: c1b3f8f3517c9d945b87b4e0d218c704, type: 3}
+  icon: {fileID: -3579905931779122104, guid: ff3896d9b473d9b45a94606b49395fe3, type: 3}
   allConditions:
   - {fileID: 11400000, guid: e9a96b5dbbc9077429a179b67183b818, type: 2}
   effectSO: {fileID: 11400000, guid: e1d981af77467b946b4c69ab96efc640, type: 2}

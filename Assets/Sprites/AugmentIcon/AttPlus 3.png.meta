@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 9a0afba89a4301045b80db6981d509b8
+guid: c1b3f8f3517c9d945b87b4e0d218c704
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5379432738663520110
-    second: AttPlus 3_0
+      213: -4659355159198974352
+    second: AttPlus 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AttPlus 3_0
+      name: AttPlus 1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 298aad6fc6a6855b0800000000000000
-      internalID: -5379432738663520110
+      spriteID: 07ebf854b25a65fb0800000000000000
+      internalID: -4659355159198974352
       vertices: []
       indices: 
       edges: []
@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      AttPlus 1_0: -4659355159198974352
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

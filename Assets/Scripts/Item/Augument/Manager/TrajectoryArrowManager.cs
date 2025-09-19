@@ -1,4 +1,3 @@
-// [추가] 조준 궤적을 그려주는 전담 컴포넌트 (플레이어에 붙음)
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,8 +12,7 @@ public class TrajectoryArrowManager : MonoBehaviour
 		public float segmentMaxDistance = 30f;
 		public LayerMask raycastMask;
 
-		[Header("반사 관련")]
-		[Range(0, 5)] public int maxBounceCount = 0;  // 직접 들고 있는 반사 횟수
+		public int bounceCount = 0;  // 반사 횟수
 
 		private bool isVisible = false;
 		private readonly List<Vector3> points = new List<Vector3>();
@@ -63,7 +61,7 @@ public class TrajectoryArrowManager : MonoBehaviour
 				Vector2 currentDir = dir;
 
 				int bounces = 0;
-				while (bounces <= maxBounceCount)
+				while (bounces <= bounceCount)
 				{
 						RaycastHit2D hit = Physics2D.Raycast(currentPos, currentDir, segmentMaxDistance, raycastMask);
 
@@ -71,7 +69,7 @@ public class TrajectoryArrowManager : MonoBehaviour
 						{
 								points.Add(hit.point);
 
-								if (bounces < maxBounceCount)
+								if (bounces < bounceCount)
 								{
 										Vector2 reflected = Vector2.Reflect(currentDir, hit.normal).normalized;
 										currentPos = hit.point + reflected * 0.01f;
