@@ -15,9 +15,9 @@ public class CanonAugmentManager : MonoBehaviour
   public GameObject canonBall;
   public GameObject explodeParticle;
 
-  public float canonAtt = 10;
-  public int canonBallCount = 1;
-  public float radius = 1;
+  [HideInInspector] public float canonAtt = 3;
+  [HideInInspector] public int canonBallCount = 1;
+  [HideInInspector] public float radius = 1;
 
  
   public void Activate(AugmentRuntimeContext ctx)

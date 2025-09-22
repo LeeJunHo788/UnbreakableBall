@@ -18,7 +18,7 @@ public class SpreadObjectController : MonoBehaviour
       Destroy(gameObject);
     }
 
-    else if (!collision.gameObject.CompareTag("Ball"))
+    else if (!(collision.gameObject.layer == LayerMask.NameToLayer("Ball")))
     {
       Destroy(gameObject);
     }

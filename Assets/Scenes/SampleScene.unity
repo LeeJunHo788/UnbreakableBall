@@ -4425,7 +4425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33f3e62995069fb4290625d29401824f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interval: 1
+  interval: 0.5
   spreadNum: 4
   spreadAtt: 0.1
   spreadObject: {fileID: 2992419126245275779, guid: 93b222b9cbcbfaf4596ca1bc087cbe19, type: 3}
@@ -5205,6 +5205,7 @@ MonoBehaviour:
   startPos: {x: 0, y: 0, z: 0}
   isStartPosFixed: 0
   canForceReady: 1
+  isMainBallDown: 1
   isGameOver: 0
   minReflectAngle: 5
   activeBallCount: 0

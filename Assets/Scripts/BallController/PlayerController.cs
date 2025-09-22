@@ -16,7 +16,8 @@ public class PlayerController : MonoBehaviour
   [HideInInspector] public Rigidbody2D rb;
   [HideInInspector] public Vector3 startPos;
   [HideInInspector] public bool isStartPosFixed = false;
-  public bool canForceReady = true;
+  [HideInInspector] public bool canForceReady = true;
+  [HideInInspector] public bool isMainBallDown = true;
   [HideInInspector] public bool isGameOver = false;
   [HideInInspector] public float minReflectAngle = 5f;
 
@@ -143,6 +144,7 @@ public class PlayerController : MonoBehaviour
     if (isReady && Time.timeScale != 0)
     {
       canForceReady = false;
+      isMainBallDown = false;
 
       OnPlayerFire?.Invoke();
 
@@ -276,6 +278,7 @@ public class PlayerController : MonoBehaviour
     if (collision.collider.CompareTag("DSideBar"))
     {
       rb.linearVelocity = Vector2.zero;
+      isMainBallDown = true;
 
       if (!isStartPosFixed)
       {

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8786391160058907550}
   - component: {fileID: 326975486973966681}
   - component: {fileID: -5015156585522168158}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SpreadObj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0
   m_GravityScale: 0
-  m_Material: {fileID: 6200000, guid: 0eb5e77410c3b204c9b8a176bf596e12, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -116,7 +116,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!60 &326975486973966681
 PolygonCollider2D:
   m_ObjectHideFlags: 0

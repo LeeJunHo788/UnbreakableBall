@@ -3,11 +3,14 @@ using DG.Tweening;
 
 public class CanonBallController : MonoBehaviour
 {
+  private PlayerController pc;
+
   CanonAugmentManager cam;
 
   public void Init(CanonAugmentManager canonAugmentManager)
   {
     cam = canonAugmentManager;
+    pc = PlayerController.Instance;
   }
 
   private void Explode()
@@ -17,7 +20,7 @@ public class CanonBallController : MonoBehaviour
     {
       var blockComp = block.GetComponent<Block>();
       if(blockComp)
-        blockComp.TakeDamage(cam.canonAtt);
+        blockComp.TakeDamage(pc.ps.att * cam.canonAtt);
     }
 
     float effectRadius = cam.radius / 5;

@@ -16,9 +16,10 @@ MonoBehaviour:
   id: 15
   grade: 2
   displayName: "Canon Att+ \u2160"
-  description: Canon Att +10
+  description: Canon Att Coefficient +3
   icon: {fileID: 5097737205413631781, guid: 6b7dcf90c117af44c82e4952a997ee37, type: 3}
   allConditions:
   - {fileID: 11400000, guid: 5511e426989f72b45b0c2057d4921814, type: 2}
+  - {fileID: 11400000, guid: 9857fc00dbf9cf34cadfc79f171528e2, type: 2}
   effectSO: {fileID: 11400000, guid: 937cfc5da22aaf145ae6f7475bca09b1, type: 2}
   reactive: {fileID: 0}

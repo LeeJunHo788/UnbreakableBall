@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 817f745668e54564e90bf35fd85185a8, type: 3}
   m_Name: Canon_Upgrade Att 1
   m_EditorClassIdentifier: 
-  amount: 10
+  amount: 3
