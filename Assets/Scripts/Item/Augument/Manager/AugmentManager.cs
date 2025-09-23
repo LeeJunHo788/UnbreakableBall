@@ -37,6 +37,7 @@ public class AugmentManager : MonoBehaviour
 		public SplitAugmentManager splitAM;
 		public CanonAugmentManager canonAM;
 		public SpreadAugmentManager spreadAM;
+		public TrajectoryArrowManager trajectoryAm;
 
 
 		public event System.Action OnAugmentFinished;

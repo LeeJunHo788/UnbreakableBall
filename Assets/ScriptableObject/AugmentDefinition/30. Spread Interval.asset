@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba59428802385a74d91a8d35c1a42e2c, type: 3}
-  m_Name: 1. AttPlus 1
+  m_Name: 30. Spread Interval
   m_EditorClassIdentifier: 
   augmentKind: 0
-  id: 1
-  grade: 4
-  displayName: "Attack Plus \u2160"
-  description: Attack Force +0.3
-  icon: {fileID: -3579905931779122104, guid: ff3896d9b473d9b45a94606b49395fe3, type: 3}
+  id: 30
+  grade: 1
+  displayName: Speard Interval-
+  description: Spread Interval -0.25s
+  icon: {fileID: 2842761302751378808, guid: 1f89bc0fcabebde4a990356622746989, type: 3}
   allConditions:
-  - {fileID: 11400000, guid: e9a96b5dbbc9077429a179b67183b818, type: 2}
-  effectSO: {fileID: 11400000, guid: e1d981af77467b946b4c69ab96efc640, type: 2}
+  - {fileID: 11400000, guid: f0f05d3d4100dd44ca74e3594053c5c4, type: 2}
+  - {fileID: 11400000, guid: 34363d45610c0484fbd60a20b68be966, type: 2}
+  effectSO: {fileID: 11400000, guid: e7172090f99b29949b82855d0aab0e48, type: 2}
   reactive: {fileID: 0}

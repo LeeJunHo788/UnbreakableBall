@@ -8,10 +8,8 @@ public class TrajectoryArrow : ScriptableObject, IAugmentReactive
 
 		public void Bind(AugmentManager mgr, in AugmentRuntimeContext ctx)
 		{
-				pc = ctx.Player.GetComponent<PlayerController>();
-				manager = mgr.GetComponent<TrajectoryArrowManager>();
-				if (manager == null)
-						manager = mgr.gameObject.AddComponent<TrajectoryArrowManager>();
+				pc = PlayerController.Instance;
+				manager = mgr.trajectoryAm;
 
 				// 이벤트 구독
 				pc.OnPlayerFire += HandleFire;
@@ -33,6 +31,6 @@ public class TrajectoryArrow : ScriptableObject, IAugmentReactive
 				manager = null;
 		}
 
-		private void HandleFire() => manager?.Hide();
-		private void HandleReady() => manager?.Show();
+		private void HandleFire() => manager.Hide();
+		private void HandleReady() => manager.Show();
 }

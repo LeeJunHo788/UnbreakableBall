@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a43689f180c349d48b8b95ce95731173
+guid: 8674c601defc6c542a29ab87db851e26
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2008028266825745250
-    second: Spread_Upgrade Att 2_0
+      213: 5784615598682505964
+    second: AttPlus4_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Spread_Upgrade Att 2_0
+      name: AttPlus4_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2638717d113fddb10800000000000000
-      internalID: 2008028266825745250
+      spriteID: ce287a12d35174050800000000000000
+      internalID: 5784615598682505964
       vertices: []
       indices: 
       edges: []
