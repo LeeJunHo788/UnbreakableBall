@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba59428802385a74d91a8d35c1a42e2c, type: 3}
+  m_Name: 34. Additional Ball Count Plus 1
+  m_EditorClassIdentifier: 
+  augmentKind: 0
+  id: 34
+  grade: 5
+  displayName: "Additional Ball Count Plus \u2160"
+  description: Additional Ball Count +1
+  icon: {fileID: 977729660530589503, guid: e963c20d2f89ead4fb8283b757423034, type: 3}
+  allConditions:
+  - {fileID: 11400000, guid: e9a96b5dbbc9077429a179b67183b818, type: 2}
+  effectSO: {fileID: 11400000, guid: d1f9c301741f9f342bd525c39621801f, type: 2}
+  reactive: {fileID: 0}

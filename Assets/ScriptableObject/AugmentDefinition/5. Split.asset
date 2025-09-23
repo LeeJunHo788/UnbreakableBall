@@ -19,6 +19,6 @@ MonoBehaviour:
   description: 'First Ball splits when it hits a block, '
   icon: {fileID: -6509232630430761034, guid: 2515912d63ee55848b46eef33cc72b2b, type: 3}
   allConditions:
-  - {fileID: 11400000, guid: 0ca95421193e98840b0c80a60af50c15, type: 2}
+  - {fileID: 11400000, guid: 29106ce52e1681a4b9ab98767ca7b3de, type: 2}
   effectSO: {fileID: 0}
   reactive: {fileID: 11400000, guid: bd70aaf9fc310b64fbdd3205deb7a363, type: 2}

@@ -11,7 +11,12 @@ public class SpreadObjectController : MonoBehaviour
 
   void OnCollisionEnter2D(Collision2D collision)
   {
-    if (collision.gameObject.CompareTag("Block"))
+    
+  }
+
+  void OnTriggerEnter2D(Collider2D collision)
+  {
+    if (collision.CompareTag("Block"))
     {
       Block bc = collision.gameObject.GetComponent<Block>();
       bc.TakeDamage(att);

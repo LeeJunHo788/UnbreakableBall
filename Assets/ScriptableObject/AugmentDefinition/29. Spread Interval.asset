@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba59428802385a74d91a8d35c1a42e2c, type: 3}
+  m_Name: 29. Spread Interval
+  m_EditorClassIdentifier: 
+  augmentKind: 0
+  id: 29
+  grade: 1
+  displayName: Speard Interval-
+  description: Spread Interval -0.25s
+  icon: {fileID: 2842761302751378808, guid: 1f89bc0fcabebde4a990356622746989, type: 3}
+  allConditions:
+  - {fileID: 11400000, guid: f0f05d3d4100dd44ca74e3594053c5c4, type: 2}
+  - {fileID: 11400000, guid: 34363d45610c0484fbd60a20b68be966, type: 2}
+  effectSO: {fileID: 11400000, guid: e7172090f99b29949b82855d0aab0e48, type: 2}
+  reactive: {fileID: 0}

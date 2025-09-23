@@ -18,6 +18,7 @@ MonoBehaviour:
   displayName: Spread
   description: Spread the bullets
   icon: {fileID: 6387070366799435074, guid: f2c957d08a7f9514aa726dbda0403436, type: 3}
-  allConditions: []
+  allConditions:
+  - {fileID: 11400000, guid: 29106ce52e1681a4b9ab98767ca7b3de, type: 2}
   effectSO: {fileID: 0}
   reactive: {fileID: 11400000, guid: b5a858162921ba9439cff77cce1d8510, type: 2}

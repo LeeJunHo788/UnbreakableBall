@@ -10,16 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba59428802385a74d91a8d35c1a42e2c, type: 3}
-  m_Name: 30. Spread Interval
+  m_Name: 35. Additional Ball Count Plus 2
   m_EditorClassIdentifier: 
   augmentKind: 0
-  id: 30
-  grade: 1
-  displayName: Speard Interval-
-  description: Spread Interval -0.25s
-  icon: {fileID: 2842761302751378808, guid: 1f89bc0fcabebde4a990356622746989, type: 3}
+  id: 35
+  grade: 4
+  displayName: "Additional Ball Count Plus \u2161"
+  description: Additional Ball Count +2
+  icon: {fileID: -5434319239673789771, guid: 32712b1a7b51aa640b5a99201b8db834, type: 3}
   allConditions:
-  - {fileID: 11400000, guid: f0f05d3d4100dd44ca74e3594053c5c4, type: 2}
-  - {fileID: 11400000, guid: 34363d45610c0484fbd60a20b68be966, type: 2}
-  effectSO: {fileID: 11400000, guid: e7172090f99b29949b82855d0aab0e48, type: 2}
+  - {fileID: 11400000, guid: 29106ce52e1681a4b9ab98767ca7b3de, type: 2}
+  effectSO: {fileID: 11400000, guid: e298d51478b414740b7a73781725891a, type: 2}
   reactive: {fileID: 0}

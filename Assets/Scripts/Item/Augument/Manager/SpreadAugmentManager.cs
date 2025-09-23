@@ -80,6 +80,7 @@ public class SpreadAugmentManager : MonoBehaviour
   private IEnumerator EnableColliderNextFixed(Collider2D c)
   {
     yield return new WaitForFixedUpdate();           
+    yield return new WaitForFixedUpdate();           
     if (c) c.enabled = true;                         
   }
 

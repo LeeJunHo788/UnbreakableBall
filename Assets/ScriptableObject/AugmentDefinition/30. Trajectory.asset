@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba59428802385a74d91a8d35c1a42e2c, type: 3}
-  m_Name: 29. Trajectory Arrow
+  m_Name: 30. Trajectory
   m_EditorClassIdentifier: 
   augmentKind: 2
-  id: 29
-  grade: 5
+  id: 30
+  grade: 1
   displayName: Trajectory Arrow
-  description: Display Trajectory Arrow
-  icon: {fileID: 21300000, guid: 67182ba644826da46ba5392b820b903e, type: 3}
-  allConditions: []
+  description: Display Trajectory
+  icon: {fileID: -5153509287413949172, guid: bb7e7f90b1ee64a4da5775c15201974d, type: 3}
+  allConditions:
+  - {fileID: 11400000, guid: 29106ce52e1681a4b9ab98767ca7b3de, type: 2}
   effectSO: {fileID: 0}
   reactive: {fileID: 11400000, guid: 600b4b1bee5020c43a1acbbe2feb0a83, type: 2}

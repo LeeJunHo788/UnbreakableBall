@@ -4,44 +4,87 @@ using UnityEngine;
 [RequireComponent(typeof(Transform))]
 public class TrajectoryArrowManager : MonoBehaviour
 {
+		private bool isActive = false;
 		private PlayerController pc;
 		private LineRenderer lr;
 
-		private float lineWidth = 0.06f;
+		private float lineWidth = 0.07f;
 		private float segmentMaxDistance = 30f;
-		public LayerMask raycastMask;
+		public GameObject circleObj;
 
-		public int bounceCount = 0;  // 반사 횟수
+		[Header("반사 횟수")]
+		public int bounceCount = 0;
 
-		private bool isVisible = false;
+  [Header("레이캐스트 마스크")]
+  public LayerMask raycastMaskNormal;       
+  public LayerMask raycastMaskWithDSideBar; 
+
+  private bool isVisible = false;
 		private readonly List<Vector3> points = new List<Vector3>();
 
-		private void Start()
+		
+		public void Activate(AugmentRuntimeContext ctx)
 		{
-				pc = PlayerController.Instance;
-				lr = GetComponent<LineRenderer>();
-				lr.startWidth = lr.endWidth = lineWidth;
-				lr.enabled = false;
-		}
+				if(!isActive)
+				{
+						pc = PlayerController.Instance;
+						lr = GetComponent<LineRenderer>();
+						lr.startWidth = lr.endWidth = lineWidth;
+						lr.enabled = false;
 
-		public void Show()
+						circleObj = Instantiate(circleObj);
+						circleObj.SetActive(false);
+
+      // 이벤트 구독
+      pc.OnPlayerFire += HandleFire;
+      pc.OnPlayerReady += HandleReady;
+
+      if (pc.isReady) Show();
+      else Hide();
+
+      isActive = true;
+
+				}
+  }
+
+		public void Deactivate()
 		{
-				isVisible = true;
-				lr.enabled = true;
-				UpdateLine();
-		}
+				if(isActive)
+				{
+      pc.OnPlayerFire -= HandleFire;
+      pc.OnPlayerReady -= HandleReady;
+						Hide();
 
-		public void Hide()
+						isActive = false;
+    }
+    
+  }
+
+  public void Show()
+  {
+    isVisible = true;
+    lr.enabled = true;
+    circleObj.SetActive(true);
+    UpdateLine();
+    UpdateCircle();
+  }
+
+  public void Hide()
 		{
 				isVisible = false;
 				lr.enabled = false;
+				circleObj.SetActive(false);
 				
 		}
 
 		private void LateUpdate()
 		{
 				if (isVisible && pc != null && pc.isReady)
+				{
 						UpdateLine();
+      UpdateCircle();
+
+    }
 		}
 
 		private void UpdateLine()
@@ -63,16 +106,17 @@ public class TrajectoryArrowManager : MonoBehaviour
 
 				while (bounces <= bounceCount)
 				{
-						RaycastHit2D hit = Physics2D.Raycast(currentPos, currentDir, segmentMaxDistance, raycastMask);
+						LayerMask mask = (bounces == 0) ? raycastMaskNormal : raycastMaskWithDSideBar;
+
+      RaycastHit2D hit = Physics2D.Raycast(currentPos, currentDir, segmentMaxDistance, mask);
 
 						if (hit.collider != null)
 						{
-								points.Add(hit.point);
+        points.Add(hit.point);
 
-								if (hit.collider.CompareTag("DSideBar"))
-								{
-										break;
-								}
+        if (hit.collider.CompareTag("DSideBar"))
+          break;
+
 
 								if (bounces < bounceCount)
 								{
@@ -95,4 +139,13 @@ public class TrajectoryArrowManager : MonoBehaviour
 				for (int i = 0; i < points.Count; i++)
 						lr.SetPosition(i, points[i]);
 		}
+
+		private void UpdateCircle()
+		{
+    Vector3 endPos = lr.GetPosition(lr.positionCount - 1);
+				circleObj.transform.position = endPos;
+  }
+
+  private void HandleFire() => Hide();
+  private void HandleReady() => Show();
 }

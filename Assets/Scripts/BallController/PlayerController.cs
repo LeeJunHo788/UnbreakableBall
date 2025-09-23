@@ -157,6 +157,7 @@ public class PlayerController : MonoBehaviour
       StartCoroutine(AddBall(dir, plannedAddsThisRound)); 
       
       rb.linearVelocity = dir.normalized * ps.moveSpeed;
+      if(directionObj)
       directionObj.gameObject.SetActive(false);
       isReady = false;
 
@@ -222,7 +223,8 @@ public class PlayerController : MonoBehaviour
     subBalls.Clear();
 
 				isReady = true;
-				directionObj.gameObject.SetActive(true);
+    if (directionObj)
+      directionObj.gameObject.SetActive(true);
 
     activeBallCount = 0;
 

@@ -3067,7 +3067,7 @@ GameObject:
   - component: {fileID: 1010833461}
   - component: {fileID: 1010833460}
   - component: {fileID: 1010833462}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DSideBar
   m_TagString: DSideBar
   m_Icon: {fileID: 0}
@@ -4006,10 +4006,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5abc4a030e2c16846ab832eab8fb9846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raycastMask:
-    serializedVersion: 2
-    m_Bits: 1
+  circleObj: {fileID: 662921053643454067, guid: 90604db15096f7842b9a98cbdff000f1, type: 3}
   bounceCount: 0
+  raycastMaskNormal:
+    serializedVersion: 2
+    m_Bits: 55
+  raycastMaskWithDSideBar:
+    serializedVersion: 2
+    m_Bits: 119
 --- !u!120 &1259794186
 LineRenderer:
   serializedVersion: 2
@@ -4057,7 +4061,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -4065,8 +4069,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 1
+        time: 0.05734951
+        value: 0.20833421
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -4718,6 +4722,8 @@ MonoBehaviour:
   allAugments:
   - {fileID: 11400000, guid: 0c7da8a052b90dd4599046370965c62f, type: 2}
   - {fileID: 11400000, guid: 7d505ff843e138240a844264dbef57e3, type: 2}
+  - {fileID: 11400000, guid: e12ba67ebbd11e1419428d57119fbb3c, type: 2}
+  - {fileID: 11400000, guid: 6e0206e5eb826df4f806928ec161669a, type: 2}
   - {fileID: 11400000, guid: 8ca9e84153353c94588f192d64171a87, type: 2}
   - {fileID: 11400000, guid: a64f793f9b6ab0a459241f8c78fe8cc3, type: 2}
   - {fileID: 11400000, guid: 72abdaeaa5b628b48a70ec2a74bd635d, type: 2}
@@ -4739,7 +4745,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: af14ab8b60bf292468bcad9af0dbf405, type: 2}
   - {fileID: 11400000, guid: d840d4ddf889bb44dba4bfcc8ff667c4, type: 2}
   - {fileID: 11400000, guid: 38f0206f740414b4aa0b35eb082c3e5d, type: 2}
+  - {fileID: 11400000, guid: a6821d8b393f7194987d3fb6d6050f83, type: 2}
+  - {fileID: 11400000, guid: 8a3b644f99644ae4fae1640517d3442f, type: 2}
+  - {fileID: 11400000, guid: d57168708c844b748a5808a6354ce283, type: 2}
+  - {fileID: 11400000, guid: b7f407801191a2d4b942909982319fcf, type: 2}
   - {fileID: 11400000, guid: 290358036e2c0644aa7f51d0b9ea8e4c, type: 2}
+  - {fileID: 11400000, guid: 2a358734055418c4c9f519b3d43ff6a2, type: 2}
+  - {fileID: 11400000, guid: a0263514009673a489c1372b381875d0, type: 2}
+  - {fileID: 11400000, guid: 8c3d6ad84568c1848b7e619bc80672bf, type: 2}
+  - {fileID: 11400000, guid: ba94da2a0a64d6d41923f90bb186620e, type: 2}
+  - {fileID: 11400000, guid: 7af15356932c4fa4783002ef2ee693b0, type: 2}
+  - {fileID: 11400000, guid: f4e4ea2bc477b2340a3973d906d9d7c9, type: 2}
+  - {fileID: 11400000, guid: 59c89617298af824484ecf5d471856ce, type: 2}
   grade1Weight: 1
   grade2Weight: 2
   grade3Weight: 3
