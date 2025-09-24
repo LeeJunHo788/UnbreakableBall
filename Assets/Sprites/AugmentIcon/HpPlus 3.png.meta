@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 2610ec52c2267e04399f83209532cbc8
+guid: 17cbf5bfd59da564188ba3988fa1f6c4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7332565702494871033
-    second: Trajactory_UpgradeCount_0
+      213: 4247071871439729446
+    second: HpPlus 3_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Trajactory_UpgradeCount_0
+      name: HpPlus 3_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 13
-        width: 301
-        height: 301
+        x: 0
+        y: 0
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 702a49ad75e7d3a90800000000000000
-      internalID: -7332565702494871033
+      spriteID: 623f7b87d51a0fa30800000000000000
+      internalID: 4247071871439729446
       vertices: []
       indices: 
       edges: []
@@ -134,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      Trajactory_UpgradeCount_0: -7332565702494871033
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

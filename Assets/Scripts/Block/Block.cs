@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
+using System.Collections.Generic;
 
 // 블럭 가로 차이 = 1 세로 차이 = 0.5
 public class Block : MonoBehaviour
@@ -11,6 +12,9 @@ public class Block : MonoBehaviour
   protected float hp;
   protected float def;
   protected int advanceCount = 0;
+
+		[Header("드랍 아이템 리스트")]
+		public List<Item> dropItemList;
 
   protected virtual void Start()
   {
@@ -97,11 +101,39 @@ public class Block : MonoBehaviour
     if (hp <= 0)
     {
       ExpManager.Instance.AddExp(maxHp);
-      DropItem();
+      TryDropItem();
       Destroy(gameObject);
     }
   }
 
-  protected virtual void DropItem() { }
+  protected GameObject TryDropItem()
+		{
+				if (dropItemList.Count == 0) return null;
 
+				float rnd = Random.Range(0f, 1f);
+				if (rnd > PlayerController.Instance.ps.dropChance) return null;
+
+				float totalWeight = 0;
+				foreach (var item in dropItemList)
+				{
+						totalWeight += item.dropWeight;
+				}
+
+				float rndValue = Random.Range(0, totalWeight);
+
+				int acc = 0;
+				foreach (var item in dropItemList)
+				{
+						acc += item.dropWeight;
+						if (rndValue < acc)
+						{
+								return item.gameObject;
+						}
+				}
+				return null;
+				
+		}
+
+		
 }
+		

@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba59428802385a74d91a8d35c1a42e2c, type: 3}
-  m_Name: 2. AttPlus 2
+  m_Name: 40. HpPlus 3
   m_EditorClassIdentifier: 
   augmentKind: 0
-  id: 2
-  grade: 3
-  displayName: "Attack+ \u2161"
-  description: Attack Force +0.5
-  icon: {fileID: -5379432738663520110, guid: 9a0afba89a4301045b80db6981d509b8, type: 3}
+  id: 40
+  grade: 1
+  displayName: "Hp+ \u2162"
+  description: Hp+ 50
+  icon: {fileID: 4247071871439729446, guid: 17cbf5bfd59da564188ba3988fa1f6c4, type: 3}
   allConditions:
-  - {fileID: 11400000, guid: 29106ce52e1681a4b9ab98767ca7b3de, type: 2}
-  effectSO: {fileID: 11400000, guid: c9a263c5d62d12246a5676631d705754, type: 2}
+  - {fileID: 11400000, guid: 7542c3b1851d2a74dab00b74e99ea411, type: 2}
+  effectSO: {fileID: 11400000, guid: fbac4003584aa524cb98a0cee82590a1, type: 2}
   reactive: {fileID: 0}

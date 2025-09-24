@@ -15,7 +15,7 @@ MonoBehaviour:
   augmentKind: 0
   id: 27
   grade: 1
-  displayName: "Exp Plus+ \u2161"
+  displayName: "Exp+ \u2161"
   description: Exp gain +20%
   icon: {fileID: 9125682072865187108, guid: c0e9c10cb1fef1043ae4d3d299aa2e92, type: 3}
   allConditions:

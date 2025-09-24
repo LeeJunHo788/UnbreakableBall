@@ -11,9 +11,4 @@ public class BlueBlcok : Block
     base.Start();
   }
 
-  protected override void DropItem()
-  {
-    Debug.Log("½ÇÇà");
-  }
-
 }

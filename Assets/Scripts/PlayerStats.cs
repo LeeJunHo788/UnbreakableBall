@@ -12,6 +12,9 @@ public class PlayerStats : MonoBehaviour
   [HideInInspector] public float shootInterval = 0.075f;
   [HideInInspector] public int hp = 10;
 		[HideInInspector] public float expGain = 1.0f;
+		[HideInInspector] public float dropChance = 0.3f;
+
+
 		[HideInInspector] public float angle = 90f;
 		[HideInInspector] public float angleSpeed = 60f;
 

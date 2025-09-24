@@ -15,7 +15,7 @@ MonoBehaviour:
   augmentKind: 0
   id: 1
   grade: 4
-  displayName: "Attack Plus \u2160"
+  displayName: "Attack+ \u2160"
   description: Attack Force +0.3
   icon: {fileID: -3579905931779122104, guid: ff3896d9b473d9b45a94606b49395fe3, type: 3}
   allConditions:
