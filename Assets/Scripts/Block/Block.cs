@@ -13,6 +13,13 @@ public class Block : MonoBehaviour
   protected float def;
   protected int advanceCount = 0;
 
+		[HideInInspector] public int spawnWeight;
+
+		public virtual int GetWeight(int round)
+		{
+				return spawnWeight;
+		}
+
 		[Header("드랍 아이템 리스트")]
 		public List<Item> dropItemList;
 
@@ -101,7 +108,12 @@ public class Block : MonoBehaviour
     if (hp <= 0)
     {
       ExpManager.Instance.AddExp(maxHp);
-      TryDropItem();
+
+						GameObject dropItem = TryDropItem();
+
+						if (dropItem != null)
+								Instantiate(dropItem, transform.position, Quaternion.identity);
+
       Destroy(gameObject);
     }
   }

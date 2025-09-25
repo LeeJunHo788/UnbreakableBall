@@ -2,12 +2,13 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
-using static Unity.Collections.AllocatorManager;
 
 public class BlockSpawner : MonoBehaviour
 {
 		public AugmentManager augmentManager;
-  public GameObject blockObject;
+
+		[Header("ºí·Ï ÇÁ¸®ÆÕ")]
+		public List<Block> blocks = new List<Block>();
   Transform[] spawnPoints;
 
   private void Start()
@@ -44,13 +45,44 @@ public class BlockSpawner : MonoBehaviour
 
     foreach (int n in rnd)
     {
-      GameObject block = Instantiate(blockObject, spawnPoints[n].transform.position, Quaternion.identity);
-      block.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+						GameObject temp = ChoiceBlock();
 
-      block.transform.DOScale(new Vector3(1.0f, 0.5f, 1), 0.3f).SetEase(Ease.InOutSine);
+						if(temp != null)
+						{
+								GameObject block = Instantiate(temp, spawnPoints[n].transform.position, Quaternion.identity);
+								block.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+								block.transform.DOScale(new Vector3(1.0f, 0.5f, 1), 0.3f).SetEase(Ease.InOutSine);
+
+						}
+
+
     }
 
   }
+
+		public GameObject ChoiceBlock()
+		{
+				int total = 0;
+
+				foreach(var b in blocks)
+				{
+						total += b.spawnWeight;
+				}
+
+				int rnd = Random.Range(0, total);
+
+				int acc = 0;
+				foreach (var b in blocks)
+				{
+						acc += b.spawnWeight;
+						if (rnd < acc)
+						{
+								return b.gameObject;
+						}
+				}
+				return null;
+
+		}
 
   void OnDestroy()
   {

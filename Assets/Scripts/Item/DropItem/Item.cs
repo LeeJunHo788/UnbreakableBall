@@ -3,10 +3,10 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
 
-		[HideInInspector] public float downSpeed = 3.5f;
-		[HideInInspector] public float moveSpeed = 10f;
-		[HideInInspector] public bool isDroping = true;
-		[HideInInspector] public int dropWeight = 1;
+		private float downSpeed = 3.5f;
+		private float moveSpeed = 10f;
+		public bool isDroping = true;
+		public int dropWeight = 1;
 
 		protected void Update()
 		{
@@ -25,12 +25,12 @@ public class Item : MonoBehaviour
 		{
 				Vector3 playerPos = PlayerController.Instance.gameObject.transform.position;
 				Vector3 dir = (playerPos - transform.position).normalized;
-				transform.position += dir * moveSpeed;
+				transform.position += dir * Time.deltaTime * moveSpeed;
 		}
 
 		protected virtual void Apply(PlayerController pc)
 		{
-
+				Debug.Log("»£√‚");
 		}
 
 		private void OnTriggerEnter2D(Collider2D collision)

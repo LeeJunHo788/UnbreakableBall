@@ -27,14 +27,20 @@ public class PlayerStats : MonoBehaviour
 
   public void TakeDamage(int val)
   {
-    hp -= val;
-    hpText.text = $"Hp : {hp}";
+				hp -= val;
+				HpSet();
 
-    if(hp <= 0)
+				if (hp <= 0)
     {
       GameManager.Instance.GameOver();
     }
   }
+
+		public void HpSet()
+		{
+				Debug.Log("È£Ãâ");
+				hpText.text = $"Hp : {hp}";
+		}
 
   public void AddBallCount()
   {

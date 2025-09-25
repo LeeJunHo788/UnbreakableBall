@@ -71,7 +71,6 @@ public class PlayerController : MonoBehaviour
 
     transform.rotation = Quaternion.Euler(0, 0, ps.angle);
 
-
     OnPlayerReady?.Invoke();
   }
 

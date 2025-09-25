@@ -5,6 +5,7 @@ public enum AugmentKind
 {
   Normal,
 		Upgrade,
+		Artifact,
   Special
 }
 
